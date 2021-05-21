@@ -1,0 +1,22 @@
+.header {
+    width: 100vw;
+    background-color: #F6D0B1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.header nav ul li {
+    margin: 0 0.25rem;
+    padding: 1rem;
+}
+
+.header nav ul li a {
+    color: #CE4760;
+    text-decoration: none;
+}
