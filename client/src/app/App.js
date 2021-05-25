@@ -11,7 +11,7 @@ function App() {
     <div className={styles.app}>
       <FirebaseProvider>
         <AuthProvider>
-          <Router basename={'/'}>
+          <Router basename={'movie-application-pgm-chardelv1'}>
             <Switch>
               	<Route exact path={Routes.LANDING} component={ HomePage }/>
                 <Route from={Routes.HOME} to={Routes.LANDING}/>

@@ -42,6 +42,8 @@ const AuthProvider = ({children}) => {
   );
 };
 
+// TODO: Add registration option
+
 export {
   AuthContext,
   AuthProvider,
