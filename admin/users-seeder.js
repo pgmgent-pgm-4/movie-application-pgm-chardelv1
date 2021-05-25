@@ -30,7 +30,7 @@ import { admin, app, auth, db, generateTimestamps, generateValueBetweenMinAndMax
     const promises = [];
     for (let i=0; i < n;i++) {
       const gender = generateValueBetweenMinAndMax(0, 1);
-      promises.push(await createUser(faker.internet.email(faker.name.firstName(gender), faker.name.lastName(gender)), 'w84pgmGent', faker.internet.displayName, faker.internet.avatar()));
+      promises.push(await createUser(faker.internet.email(faker.name.firstName(gender), faker.name.lastName(gender)), 'w84pgmGent', faker.internet.displayName, `https://robohash.org/${uuidv4()}?gravatar=hashed`));
     }
     return await Promise.all(promises);
   };

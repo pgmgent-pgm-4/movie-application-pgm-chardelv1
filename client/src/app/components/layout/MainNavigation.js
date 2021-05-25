@@ -3,8 +3,9 @@ import {
 } from "react-router-dom";
 
 import * as Routes from '../../routes';
-
 import { useAuth } from '../../contexts/firebase/auth.context';
+
+import styles from './MainNavigation.module.scss';
 
 const MainNavigation = () => {
   const {currentUser, signOut} = useAuth();
@@ -20,7 +21,7 @@ const MainNavigation = () => {
         </li>
         <li>
           {!!currentUser
-          ? <a href="#" onClick={signOut}>Logout</a>
+          ? <a href="#" onClick={signOut}><img className={styles.user__avatar} src={currentUser.photoURL} />Logout</a>
           : <Link to={Routes.AUTH_SIGN_IN}>Sign In</Link>
           }    
         </li>
