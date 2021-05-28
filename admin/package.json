@@ -18,9 +18,11 @@
     "babel-preset-airbnb": "^5.0.0"
   },
   "scripts": {
+    "seeder:": "babel-node projects-seeder.js --debug --presets airbnb",
+    "seeder:project-reviews": "babel-node project-reviews-seeder.js --debug --presets airbnb",
+    "seeder:project-views": "babel-node project-views-seeder.js --debug --presets airbnb",
     "seeder:users": "babel-node users-seeder.js --debug --presets airbnb",
-    "seeder:projects": "babel-node projects-seeder.js --debug --presets airbnb",
-    "delete:users": "babel-node users-delete.js --debug --presets airbnb",
-    "delete:projects": "babel-node projects-delete.js --debug --presets airbnb"
+    "delete:projects": "babel-node collection-delete.js projects 50 --debug --presets airbnb",
+    "delete:users": "babel-node users-delete.js --debug --presets airbnb"
   }
 }

@@ -1,7 +1,9 @@
 export const LANDING = '/';
 export const HOME = '/home';
-export const PROJECTS = '/projects';
-export const PROJECT_DETAILS = '/projects/:id';
+export const MOVIES = '/movies';
+export const MOVIE_DETAILS = '/movies/:id';
+export const TVSHOWS = '/tv-shows';
+export const TVSHOW_DETAILS = 'tv-shows/:id';
 export const POSTS = '/posts';
 export const POST_DETAILS = '/posts/:id';
 export const AUTH_SIGN_IN = '/auth/sigin';

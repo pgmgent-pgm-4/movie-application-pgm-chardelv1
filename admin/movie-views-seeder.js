@@ -6,19 +6,19 @@ import { v4 as uuidv4 } from 'uuid';
   // Get all users
   let users = await auth.listUsers(1000, undefined);
 
-  // Get all projects
-  let projectsRef = db.collection('projects');
-  const query = projectsRef.orderBy('createdAt', 'desc');
+  // Get all movies
+  let moviesRef = db.collection('movies');
+  const query = moviesRef.orderBy('createdAt', 'desc');
   const querySnapshot = await query.get();
-  const projects = querySnapshot.docs.map((doc) => {
+  const movies = querySnapshot.docs.map((doc) => {
     return {
       uid: doc.id,
       ...doc.data()
     }
   });
 
-  projects.forEach(project => {
-    let viewsRef = db.collection('projects').doc(project.uid).collection('views');
+  movies.forEach(movie => {
+    let viewsRef = db.collection('movies').doc(movie.uid).collection('views');
     let numViews = generateValueBetweenMinAndMax(0, 100), usersCopy = JSON.parse(JSON.stringify(users.users)), userStart = null, userId = 0;
     for (let i = 0; i < numViews;i++) {
       userStart = Math.floor(Math.random()*usersCopy.length);
@@ -28,7 +28,7 @@ import { v4 as uuidv4 } from 'uuid';
       });
     }
 
-    projectsRef.doc(project.uid).update({
+    moviesRef.doc(movie.uid).update({
       numViews: numViews,
       modifiedAt: Date.now(),
     });  

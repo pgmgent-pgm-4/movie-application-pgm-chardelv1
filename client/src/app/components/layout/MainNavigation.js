@@ -17,7 +17,10 @@ const MainNavigation = () => {
           <Link to={Routes.LANDING}>Home</Link>
         </li>
         <li>
-          <Link to={Routes.PROJECTS}>Projects</Link>
+          <Link to={Routes.MOVIES}>Movies</Link>
+        </li>
+        <li>
+          <Link to={Routes.TVSHOWS}>TV-Shows</Link>
         </li>
         <li>
           {!!currentUser

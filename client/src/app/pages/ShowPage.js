@@ -1,11 +1,11 @@
 import { BaseLayout } from '../layouts';
 
-const ProjectPage = () => {
+const ShowPage = () => {
   return (
     <BaseLayout>
-      <p>PROJECT PAGE</p>
+      <p>TV SHOW PAGE</p>
     </BaseLayout>
   );
 };
 
-export default ProjectPage;
+export default ShowPage;

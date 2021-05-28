@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import * as Routes from './routes';
 
 import styles from './App.module.scss';
-import { HomePage, ProjectPage, ProjectsPage, SignInPage } from './pages';
+import { HomePage, MoviePage, MoviesPage, ShowPage, ShowsPage, SignInPage } from './pages';
 
 function App() {
   return (
@@ -15,8 +15,10 @@ function App() {
             <Switch>
               	<Route exact path={Routes.LANDING} component={ HomePage }/>
                 <Route from={Routes.HOME} to={Routes.LANDING}/>
-                <Route exact path={Routes.PROJECT_DETAILS} component={ ProjectPage }/>
-                <Route exact path={Routes.PROJECTS} component={ ProjectsPage }/>
+                <Route exact path={Routes.MOVIE_DETAILS} component={ MoviePage }/>
+                <Route exact path={Routes.MOVIES} component={ MoviesPage }/>
+                <Route exact path={Routes.TVSHOW_DETAILS} component={ ShowPage }/>
+                <Route exact path={Routes.TVSHOWS} component={ ShowsPage }/>
                 <Route exact path={Routes.AUTH_SIGN_IN} component={ SignInPage }/>
             </Switch>
           </Router>
