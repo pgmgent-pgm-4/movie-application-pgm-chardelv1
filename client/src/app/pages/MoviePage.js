@@ -1,9 +1,13 @@
+import { useParams } from 'react-router-dom';
+
+import { MovieDetails } from '../components/movies';
 import { BaseLayout } from '../layouts';
 
 const MoviePage = () => {
+  const { id } = useParams();
   return (
     <BaseLayout>
-      <p>MOVIE PAGE</p>
+      <MovieDetails id={id}/>
     </BaseLayout>
   );
 };

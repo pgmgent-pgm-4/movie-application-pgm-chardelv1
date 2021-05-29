@@ -4,15 +4,15 @@ import { useFirestore } from "../../contexts/firebase/firestore.context";
 import useFetch from '../../hooks/useFetch';
 
 import MovieListItem from './MovieListItem';
+import styles from './MovieList.module.scss';
 
 const MovieList = ({itemsPerPage = 10}) => {
   
   const [data, isLoading, error] = useFetch('discover/movie')
   const movies = data.results;
-  console.log(data);
   console.log(data.results);
   return (
-    <div className="movie-list">
+    <div className={styles.movieList}>
       {isLoading && <p>Loading...</p>}
       {!!movies && movies.map(movie => {
         return (
