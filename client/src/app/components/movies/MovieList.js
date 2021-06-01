@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import { useFirestore } from "../../contexts/firebase/firestore.context";
 import useFetch from '../../hooks/useFetch';
 

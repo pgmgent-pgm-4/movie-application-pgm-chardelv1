@@ -14,20 +14,7 @@ const MovieDetails = ({ id }) => {
       name: writer.name
     }
     });
-  const mergedWriters = Array.reduce((acc, obj) => {
-    if (acc[obj.name]) {
-      acc[obj.name].value = acc[obj.name].value.isArray ?
-      acc[obj.name].value.concat(obj.value) :
-      [acc[obj.name].value].concat(obj.value);
-    } else {
-      acc[obj.name] = obj;
-    }
-    return acc;
-  }, {});
-  let outputWriters = [];
-  for (let prop in mergedWriters) {
-    outputWriters.push(mergedWriters[prop])
-  }
+ 
   
   console.log(movie)
   console.log(credits)
