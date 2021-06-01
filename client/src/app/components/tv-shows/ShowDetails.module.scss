@@ -1,6 +1,8 @@
 .showlistItem {
-    overflow:hidden;
-    width: 30%;
+    overflow: hidden;
+    display: flex;
+    margin: 0 auto;
+    width: 80%;
     border: 1px solid #e3e3e3;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -8,8 +10,8 @@
 
     & .picture {
         display: block;
-        width: 100%;
-        height: 268px;        
+        width: 400px;
+        height: 600px;        
 
         & > img {
             box-sizing: border-box;
@@ -57,5 +59,8 @@
         text-align: center;
         line-height: 32px;
         font-size: 0.8rem;
+    }
+    & .textInfo {
+        padding: 0 2.5rem;
     }
 }

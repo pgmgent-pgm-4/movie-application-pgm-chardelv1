@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useFetch = (endpoint, queryParams) => {
   if (!!queryParams) {
@@ -9,10 +9,7 @@ const useFetch = (endpoint, queryParams) => {
   const [ data, setData ] = useState([]);
   const [ error, setError ] = useState();
   const [ isLoading, setIsLoading ] = useState(true);
-  console.log(process.env.REACT_APP_TMDB_API_KEY)
   const apiUrl = `https://api.themoviedb.org/3/${endpoint}?api_key=${process.env.REACT_APP_TMDB_API_KEY}${queryParams}`
-
-  console.log(apiUrl)
 
   const getData = async () => {
     try {

@@ -1,9 +1,10 @@
 import { BaseLayout } from '../layouts';
+import ShowList from '../components/tv-shows/ShowList';
 
 const ShowsPage = () => {
   return (
     <BaseLayout>
-      <p>SHOWS PAGE</p>
+      <ShowList />
     </BaseLayout>
   );
 };

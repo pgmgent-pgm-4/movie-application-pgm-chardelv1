@@ -24,7 +24,7 @@ const MainNavigation = () => {
         </li>
         <li>
           {!!currentUser
-          ? <a href="#" onClick={signOut}><img className={styles.user__avatar} src={currentUser.photoURL} alt='User avatar'/>Logout</a>
+          ? <button href="#" onClick={signOut}><img className={styles.user__avatar} src={currentUser.photoURL} alt='User avatar'/>Logout</button>
           : <Link to={Routes.AUTH_SIGN_IN}>Sign In</Link>
           }    
         </li>

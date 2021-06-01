@@ -1,9 +1,14 @@
+import { useParams } from 'react-router-dom';
+
 import { BaseLayout } from '../layouts';
+import { ShowDetails } from '../components/tv-shows';
+
 
 const ShowPage = () => {
+  const { id } = useParams();
   return (
     <BaseLayout>
-      <p>TV SHOW PAGE</p>
+      <ShowDetails id={id}/>
     </BaseLayout>
   );
 };

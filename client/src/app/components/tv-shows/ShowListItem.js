@@ -10,15 +10,15 @@ const ShowListItem = ({ show }) => {
   return (
     <article className={styles.showlistItem}>      
       <picture className={styles.picture}>
-        <img src={show.thumbnailURL} alt={show.title} />
+        <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${show.poster_path}`} alt={show.name} />
       </picture>
       <div className={styles.content}>
-        <span className={styles.rating}>{Math.round(show.avgRating / 5 * 100)}</span>
-        <h3 className={styles.title}><Link to={Routes.SHOW_DETAILS.replace(':id', show.uid)}>{ show.title }</Link></h3>
+        <span className={styles.rating}>{show.vote_average}</span>
+        <h3 className={styles.title}><Link to={Routes.TVSHOW_DETAILS.replace(':id', show.id)}>{ show.name }</Link></h3>
       </div>   
       <footer className={styles.meta}>
-        <span className={styles.numReviews}><VscPreview /><span>{ show.numReviews }</span></span>
-        <span className={styles.numViews}><FiEye /><span>{ show.numViews }</span></span>
+        <span className={styles.numReviews}><VscPreview /><span>{ show.vote_count }</span></span>
+        <span className={styles.numViews}><FiEye /><span>{ Math.floor(show.popularity) }</span></span>
       </footer>   
     </article>
   )
