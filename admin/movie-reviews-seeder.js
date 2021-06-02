@@ -2,6 +2,8 @@ import { admin, app, auth, db, generateTimestamps, generateValueBetweenMinAndMax
 import faker from 'faker';
 import { v4 as uuidv4 } from 'uuid';
 
+import fetchData from './fetchData';
+
 (async () => {
   // Get all users
   let users = await auth.listUsers(1000, undefined);

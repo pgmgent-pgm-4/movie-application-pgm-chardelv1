@@ -3,8 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { admin, app, db, generateTimestamps } from './firebase';
 import firebase from 'firebase';
+import fetchData from './fetchData';
 
-const GDMGENT_API_CASES = 'https://www.gdm.gent/static/data/cases.json';
+// const GDMGENT_API_CASES = 'https://www.gdm.gent/static/data/cases.json';
+
 
 (async () => {
   // Get movies collection
@@ -14,9 +16,8 @@ const GDMGENT_API_CASES = 'https://www.gdm.gent/static/data/cases.json';
   const createMovie = (movie) => {
     // Add a document via movie object
     const data = {
-      title: movie.Title,
-      description: movie.Description,
-      thumbnailURL: movie.Picture,
+      id: movie.id,
+      title: movie.title,
       ...generateTimestamps()
     };
 
@@ -27,16 +28,20 @@ const GDMGENT_API_CASES = 'https://www.gdm.gent/static/data/cases.json';
 
   // Create movies via promises
   const createMovies = async () => {
-    const response = await fetch(`${GDMGENT_API_CASES}`);
-    const jsonData = await response.json();
+    try {
+      const response = await fetchData('discover/movie', '&page=5');
+      const jsonData = await response.json();
+      console.log(jsonData)
+      db.collection('counters').doc('movies').set({numAmount: jsonData.results.length}, {merge: true});
 
-    db.collection('counters').doc('movies').set({numAmount: jsonData.length}, {merge: true});
-
-    const promises = [];
-    jsonData.forEach(movie => {
-      promises.push(createMovie(movie));
-    });
-    return await Promise.all(promises);
+      const promises = [];
+      jsonData.results.forEach(movie => {
+        promises.push(createMovie(movie));
+      });
+      return await Promise.all(promises);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   await createMovies(); 
