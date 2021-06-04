@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { appConfig } from '../config';
 /**
  * Use Fetch
  * @param {string} endpoint
@@ -14,7 +15,7 @@ const useFetch = (endpoint, queryParams = '') => {
   const [data, setData] = useState([]);
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const apiUrl = `https://api.themoviedb.org/3/${endpoint}?api_key=${process.env.REACT_APP_TMDB_API_KEY}${params}`;
+  const apiUrl = `https://api.themoviedb.org/3/${endpoint}?api_key=${appConfig.tmdbApiKey}${params}`;
 
   const getData = async () => {
     try {
