@@ -26,29 +26,6 @@
     "build-storybook": "build-storybook -s public",
     "eslint": "eslint src/*.* --fix"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "airbnb"
-    ],
-    "rules": {
-      "no-use-before-define": "off",
-      "react/react-in-jsx-scope": "off",
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ]
-    },
-  
-    "overrides": [
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
