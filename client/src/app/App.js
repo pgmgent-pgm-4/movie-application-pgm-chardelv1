@@ -20,7 +20,7 @@ function App() {
       <FirebaseProvider>
         <AuthProvider>
           <FirestoreProvider>
-            <Router basename="movie-application-pgm-chardelv1">
+            <Router basename="">
               <Switch>
                 <Route exact path={Routes.LANDING} component={HomePage} />
                 <Route from={Routes.HOME} to={Routes.LANDING} />

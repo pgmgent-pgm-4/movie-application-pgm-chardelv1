@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
  */
 const useFetch = (endpoint, queryParams = '') => {
   // If there are query params defined append them to the API URL
-  let params;
+  let params = '';
   if (queryParams !== '') {
     params = `&${queryParams}`;
   }
