@@ -5,13 +5,10 @@ import { useEffect, useState } from 'react';
  * @param {string} queryParams 
  * @returns {array} [{array} data, {boolean} isLoading, {error/null} error]
  */
-const useFetch = (endpoint, queryParams) => {
+const useFetch = (endpoint, queryParams = '') => {
   // If there are query params defined append them to the API URL
-  if (!!queryParams) {
+  if (queryParams !== '') {
     queryParams = `&${queryParams}`;
-  } else {
-    // or an empty string
-    queryParams = '';
   }
   const [ data, setData ] = useState([]);
   const [ error, setError ] = useState();
