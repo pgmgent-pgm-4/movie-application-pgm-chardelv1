@@ -30,20 +30,23 @@
     "extends": [
       "react-app",
       "react-app/jest",
-      "airbnb",
-      "prettier",
-      "prettier/prettier",
-      "plugin:prettier/recommended"
+      "airbnb"
     ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
+    "rules": {
+      "no-use-before-define": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
         }
-      }
+      ]
+    },
+  
+    "overrides": [
     ]
   },
   "browserslist": {
