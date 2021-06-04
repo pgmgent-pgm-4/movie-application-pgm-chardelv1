@@ -30,7 +30,6 @@ const useFetch = (endpoint, queryParams = '') => {
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return [data, isLoading, error];
