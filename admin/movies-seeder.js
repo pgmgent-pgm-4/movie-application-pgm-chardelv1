@@ -5,13 +5,10 @@ import { admin, app, db, generateTimestamps } from './firebase';
 import firebase from 'firebase';
 import fetchData from './fetchData';
 
-// const GDMGENT_API_CASES = 'https://www.gdm.gent/static/data/cases.json';
-
-
 (async () => {
   // Get movies collection
   let collectionRef = db.collection('movies');
-
+  
   // Create a Movie
   const createMovie = (movie) => {
     // Add a document via movie object
@@ -21,19 +18,18 @@ import fetchData from './fetchData';
       ...generateTimestamps()
     };
 
-    collectionRef.doc(uuidv4()).set(data).then(documentReference => {
+    collectionRef.doc((movie.id).toString()).set(data).then(documentReference => {
       console.log(`Added movie.`);
     });
   };
 
   // Create movies via promises
-  const createMovies = async () => {
+  const createMovies = async (page) => {
     try {
-      const response = await fetchData('discover/movie', '&page=5');
+      const response = await fetchData('discover/movie', `&page=${page}`);
       const jsonData = await response.json();
       console.log(jsonData)
-      db.collection('counters').doc('movies').set({numAmount: jsonData.results.length}, {merge: true});
-
+      
       const promises = [];
       jsonData.results.forEach(movie => {
         promises.push(createMovie(movie));
@@ -44,5 +40,12 @@ import fetchData from './fetchData';
     }
   };
 
-  await createMovies(); 
+  await createMovies(1);
+  // await createMovies(5);
+  // await createMovies(10);
+
+  const nMovies = await (await db.collection('movies').get()).size;
+  console.log(nMovies)
+  db.collection('counters').doc('movies').set({numAmount: nMovies}, {merge: true});
+
 })();

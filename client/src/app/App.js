@@ -13,6 +13,7 @@ import {
   SignInPage,
 } from './pages';
 import { FirestoreProvider } from './contexts/firebase/firestore.context';
+import ResultsPage from './pages/ResultsPage';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
                   path={Routes.AUTH_SIGN_IN}
                   component={SignInPage}
                 />
+                <Route path={Routes.RESULTS} component={ResultsPage} />
               </Switch>
             </Router>
           </FirestoreProvider>

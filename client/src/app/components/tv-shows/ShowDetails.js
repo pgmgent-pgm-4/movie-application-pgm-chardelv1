@@ -10,9 +10,9 @@ const ShowDetails = ({ id }) => {
   console.log(show)
   const [credits, creditsLoading, creditsError] = useFetch(`/tv/${id}/credits`);
   const [contentRating, contentRatingLoading, contentRatingError] = useFetch(`/tv/${id}/content_ratings`);
-  console.log(show.genres)
-  const genres = show.genres;
-  console.log(contentRating)
+/*   console.log('genres', show.genres)
+  const genres = show.genres; */
+  // console.log(contentRating)
   return (
     <>
     {show && 
@@ -32,7 +32,7 @@ const ShowDetails = ({ id }) => {
       </div>
       <div className={styles.textInfo}>
         <h1>{show.name}</h1>
-        <p><span className={styles.showGenres}>{genres.map(genre => genre.name).join(', ')}</span></p>
+        {/* <p><span className={styles.showGenres}>{genres.map(genre => genre.name).join(', ')}</span></p> */}
         <h2>{show.tagline}</h2>
         <a href={show.homepage} title={show.name}>{show.name} homepage</a>
         <h2>Synopsis:</h2>

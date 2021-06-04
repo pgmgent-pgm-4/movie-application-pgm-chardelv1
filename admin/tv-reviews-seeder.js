@@ -4,19 +4,19 @@ import faker from 'faker';
   // Get all users
   let users = await auth.listUsers(1000, undefined);
 
-  // Get all movies
-  let moviesRef = db.collection('movies');
-  const query = moviesRef.orderBy('createdAt', 'desc');
+  // Get all TV shows
+  let tvRef = db.collection('tv');
+  const query = tvRef.orderBy('createdAt', 'desc');
   const querySnapshot = await query.get();
-  const movies = querySnapshot.docs.map((doc) => {
+  const tvShows = querySnapshot.docs.map((doc) => {
     return {
       uid: doc.id,
       ...doc.data()
     }
   });
 
-  movies.forEach(movie => {
-    let reviewsRef = db.collection('movies').doc(movie.uid).collection('reviews');
+  tvShows.forEach(tvShow => {
+    let reviewsRef = db.collection('tv').doc(tvShow.uid).collection('reviews');
     // Make reviews
     let numReviews = generateValueBetweenMinAndMax(0, 100), usersCopy = JSON.parse(JSON.stringify(users.users)), sumRatings = 0, userStart = null, rating = 0, userId = 0;
     for (let i = 0; i < numReviews;i++) {
@@ -32,7 +32,7 @@ import faker from 'faker';
       sumRatings += rating;
     }
 
-    moviesRef.doc(movie.uid).update({
+    tvRef.doc(tvShow.uid).update({
       numReviews: numReviews,
       avgRating: sumRatings/numReviews,
       modifiedAt: Date.now(),

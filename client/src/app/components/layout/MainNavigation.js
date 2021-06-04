@@ -1,5 +1,7 @@
+import { FiSearch } from 'react-icons/fi';
+import { useState } from 'react';
 import {
-  Link
+  Link, Route
 } from "react-router-dom";
 
 import * as Routes from '../../routes';
@@ -9,6 +11,10 @@ import styles from './MainNavigation.module.scss';
 
 const MainNavigation = () => {
   const {currentUser, signOut} = useAuth();
+  const [query, setQuery] = useState('life');
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
 
   return (
     <nav>
@@ -21,6 +27,10 @@ const MainNavigation = () => {
         </li>
         <li>
           <Link to={Routes.TVSHOWS}>TV-Shows</Link>
+        </li>
+        <li>
+          <input type="search" id="search" name="search" value={query} onChange={handleChange}/>
+          <Link to={Routes.RESULTS.replace(':query', query)}><FiSearch /></Link>
         </li>
         <li>
           {!!currentUser

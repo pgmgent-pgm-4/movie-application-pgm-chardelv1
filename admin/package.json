@@ -5,7 +5,6 @@
   "license": "MIT",
   "homepage": "",
   "dependencies": {
-    "dot-env": "0.0.1",
     "faker": "^4.1.0",
     "firebase": "^7.24.0",
     "firebase-admin": "^8.13.0",
@@ -20,9 +19,14 @@
     "dotenv": "^10.0.0"
   },
   "scripts": {
-    "seeder:": "babel-node movies-seeder.js --debug --presets airbnb",
+    "seeder:movies": "babel-node movies-seeder.js --debug --presets airbnb",
+    "seeder:movie-comments": "babel-node movie-comments-seeder.js --debug --presets airbnb",
     "seeder:movie-reviews": "babel-node movie-reviews-seeder.js --debug --presets airbnb",
     "seeder:movie-views": "babel-node movie-views-seeder.js --debug --presets airbnb",
+    "seeder:tv": "babel-node tv-seeder.js --debug --presets airbnb",
+    "seeder:tv-comments": "babel-node tv-comments-seeder.js --debug --presets airbnb",
+    "seeder:tv-reviews": "babel-node tv-reviews-seeder.js --debug --presets airbnb",
+    "seeder:tv-views": "babel-node tv-views-seeder.js --debug --presets airbnb",
     "seeder:users": "babel-node users-seeder.js --debug --presets airbnb",
     "delete:movies": "babel-node collection-delete.js movies 50 --debug --presets airbnb",
     "delete:users": "babel-node users-delete.js --debug --presets airbnb"
