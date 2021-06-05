@@ -1,6 +1,6 @@
 .header {
     width: 100%;
-    background-color: #F6D0B1;
+    background-color: #262626;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,9 +12,13 @@
         >li {
             margin: 0 0.25rem;
             padding: 1rem;
+            display: flex;
+            justify-content: center;
 
             >a {
-                color: #CE4760;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1.3rem;
+                color: #f1f1f1;
                 text-decoration: none;
             }
         }

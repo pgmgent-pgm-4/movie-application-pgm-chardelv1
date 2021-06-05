@@ -6,7 +6,7 @@ import styles from './MovieList.module.scss';
 
 const MovieList = ({itemsPerPage = 10}) => {
   
-  const [data, isLoading, error] = useFetch('discover/movie')
+  const [data, isLoading, error] = useFetch('discover/movie', 'append_to_response=videos,images')
   const movies = data.results;
   console.log(data.results);
   return (

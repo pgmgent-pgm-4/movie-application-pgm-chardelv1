@@ -5,7 +5,7 @@ import useFetch from '../../hooks/useFetch'
 import styles from './MovieDetails.module.scss';
 
 const MovieDetails = ({ id }) => {
-  const [movie, isLoading, error] = useFetch(`/movie/${id}`);
+  const [movie, isLoading, error] = useFetch(`/movie/${id}`, 'append_to_response=videos,images');
   const [credits, creditsLoading, creditsError] = useFetch(`/movie/${id}/credits`);
   let writers = [];
   if (credits.crew) writers = credits.crew.filter(crewMember => crewMember.known_for_department === 'Writing').map((writer) => { 
@@ -14,8 +14,13 @@ const MovieDetails = ({ id }) => {
       name: writer.name
     }
     });
- 
-  console.log(writers)
+  console.log(movie)
+
+  const Video = ({video}) => {
+    return (
+      <iframe width="560" height="315" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>)
+  }
+
   return (
     <>
     {movie && 
@@ -40,7 +45,7 @@ const MovieDetails = ({ id }) => {
         <h2>Synopsis:</h2>
         <p>{movie.overview}</p>
         <p><span></span></p>
-
+        {movie.videos && <Video video={movie.videos.results[0]}/>}
       </div>
     </article>}
     {isLoading && <p>Loading...</p>}
