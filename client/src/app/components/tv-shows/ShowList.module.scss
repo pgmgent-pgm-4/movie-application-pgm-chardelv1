@@ -1,5 +1,5 @@
 .showList {
+    overflow-x: auto;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
 }

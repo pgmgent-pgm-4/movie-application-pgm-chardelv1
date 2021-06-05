@@ -1,5 +1,5 @@
 .movielistItem {
-    overflow: hidden;
+    height: auto;
     display: flex;
     margin: 0 auto;
     width: 80%;
@@ -62,5 +62,9 @@
     }
     & .textInfo {
         padding: 0 2.5rem;
+    }
+    & .videoContainer {
+        width: 100%;
+        height: 100%;
     }
 }

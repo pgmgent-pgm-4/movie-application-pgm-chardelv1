@@ -1,7 +1,10 @@
 .showlistItem {
-    overflow:hidden;
+/*     overflow:hidden;
     flex-basis: 400px;
-    width: 30%;
+    width: 30%; */
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
     border: 1px solid #e3e3e3;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -9,8 +12,8 @@
 
     & .picture {
         display: block;
-        width: 100%;
-        height: 600px;        
+        width: 14rem;
+        height: 65%;        
 
         & > img {
             box-sizing: border-box;
@@ -21,14 +24,16 @@
 
     & .content {
         position: relative;
-        padding: 16px;
+        padding: 1rem;
     }
 
     & .title {
         padding: 0;
         margin: 0;
+        width: 14rem;
+        word-wrap: break-word;
 
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     & .meta {

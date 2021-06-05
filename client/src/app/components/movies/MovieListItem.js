@@ -12,9 +12,9 @@ const MovieListItem = ({ movie }) => {
     const parsedDate = new Date(date);
     return parsedDate.toISOString().split('T')[0];
   }
-  console.log(movie)
   return (
     <article className={styles.movielistItem}>
+      <Link to={Routes.MOVIE_DETAILS.replace(':id', movie.id)}>
       <picture className={styles.picture}>
       <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
       </picture>
@@ -30,6 +30,7 @@ const MovieListItem = ({ movie }) => {
         <span className={styles.numReviews}><VscPreview /><span>{ movie.vote_count }</span></span>
         <span className={styles.numViews}><FiEye /><span>{ Math.floor(movie.popularity) }</span></span>
       </footer>   
+      </Link>
     </article>
   )
 };

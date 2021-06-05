@@ -8,7 +8,8 @@ import styles from './ShowListItem.module.scss';
 
 const ShowListItem = ({ show }) => {
   return (
-    <article className={styles.showlistItem}>      
+    <article className={styles.showlistItem}>
+      <Link to={Routes.TVSHOW_DETAILS.replace(':id', show.id)}>
       <picture className={styles.picture}>
         <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${show.poster_path}`} alt={show.name} />
       </picture>
@@ -20,6 +21,7 @@ const ShowListItem = ({ show }) => {
         <span className={styles.numReviews}><VscPreview /><span>{ show.vote_count }</span></span>
         <span className={styles.numViews}><FiEye /><span>{ Math.floor(show.popularity) }</span></span>
       </footer>   
+      </Link>
     </article>
   )
 };

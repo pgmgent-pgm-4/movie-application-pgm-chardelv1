@@ -5,9 +5,10 @@ import * as Routes from '../../routes';
 import styles from './Footer.module.scss';
 
 const Footer = () => {
+  const fullYear = new Date().getFullYear();
   return (
     <footer className={styles.footer}>
-      <Link to={Routes.FOUROFOUR}>404</Link>
+      <p>Copyright &copy; {fullYear} Charlotte Delvaux</p>
     </footer>
   );
 };
