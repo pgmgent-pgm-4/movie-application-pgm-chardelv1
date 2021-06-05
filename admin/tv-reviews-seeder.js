@@ -18,7 +18,7 @@ import faker from 'faker';
   tvShows.forEach(tvShow => {
     let reviewsRef = db.collection('tv').doc(tvShow.uid).collection('reviews');
     // Make reviews
-    let numReviews = generateValueBetweenMinAndMax(0, 100), usersCopy = JSON.parse(JSON.stringify(users.users)), sumRatings = 0, userStart = null, rating = 0, userId = 0;
+    let numReviews = generateValueBetweenMinAndMax(0, 50), usersCopy = JSON.parse(JSON.stringify(users.users)), sumRatings = 0, userStart = null, rating = 0, userId = 0;
     for (let i = 0; i < numReviews;i++) {
       userStart = generateValueBetweenMinAndMax(0, usersCopy.length - 1);
       userId = usersCopy.slice(userStart, userStart + 1)[0].uid;

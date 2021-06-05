@@ -12,7 +12,7 @@ const SearchResults = ({ query }) => {
         {isLoading && <p>Loading...</p>}
         {!!results && !!results.results && results.results.map(result => {
           return (
-            <SearchResultListItem key={result.index} result={result} />
+            <SearchResultListItem key={result.id} result={result} />
           )
           }
         )}

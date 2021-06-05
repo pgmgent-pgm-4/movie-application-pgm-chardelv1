@@ -19,7 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 
   tvShows.forEach(tvShow => {
     let viewsRef = db.collection('tv').doc(tvShow.uid).collection('views');
-    let numViews = generateValueBetweenMinAndMax(0, 100), usersCopy = JSON.parse(JSON.stringify(users.users)), userStart = null, userId = 0;
+    let numViews = generateValueBetweenMinAndMax(0, 50), usersCopy = JSON.parse(JSON.stringify(users.users)), userStart = null, userId = 0;
     for (let i = 0; i < numViews;i++) {
       userStart = Math.floor(Math.random()*usersCopy.length);
       userId = usersCopy.slice(userStart, userStart + 1)[0].uid;

@@ -32,6 +32,7 @@ import fetchData from './fetchData';
       jsonData.results.forEach(tvShow => {
         promises.push(createTvShow(tvShow));
       });
+      db.collection('counters').doc('tv').set({numAmount: jsonData.results.length}, {merge: true});
       return await Promise.all(promises);
     } catch (error) {
       console.error(error);
@@ -41,7 +42,7 @@ import fetchData from './fetchData';
   await createTvShows(1);
 /*   await createTvShows(5);
   await createTvShows(10); */
-  const nShows = await (await db.collection('tv').get()).size;
+  /* const nShows = await (await db.collection('tv').get()).size;
   console.log(nShows)
-  db.collection('counters').doc('tv').set({numAmount: nShows}, {merge: true});
+  db.collection('counters').doc('tv').set({numAmount: nShows}, {merge: true}); */
 })();

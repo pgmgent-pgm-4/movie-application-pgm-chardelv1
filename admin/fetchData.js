@@ -21,6 +21,7 @@ const fetchData = async (endpoint, queryParams = '') => {
     return data;
   } catch (error) {
     console.error(error);
+  // }
   }
 }
 

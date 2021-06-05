@@ -22,6 +22,23 @@ const AuthProvider = ({children}) => {
     }
   }, [auth]);
 
+  const register = async (email, password, displayName, photoUrl) => {
+    try {
+      const data = {
+        email,
+        emailVerified: false,
+        password,
+        displayName,
+        photoUrl,
+        disabled: false,
+      };
+      const userData = await auth.createUser(data);
+      console.log(`Added user with email ${email}. Returned id: ${userData.uid}`);
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
   const signInWithEmailAndPassword = async (email, password) => {
     try {
       return await auth.signInWithEmailAndPassword(email, password);
@@ -36,13 +53,12 @@ const AuthProvider = ({children}) => {
   };
 
   return (
-    <AuthContext.Provider value={{currentUser,signInWithEmailAndPassword,signOut}}>
+    <AuthContext.Provider value={{currentUser,register,signInWithEmailAndPassword,signOut}}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// TODO: Add registration option
 
 export {
   AuthContext,

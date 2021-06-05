@@ -11,7 +11,7 @@ import styles from './MainNavigation.module.scss';
 
 const MainNavigation = () => {
   const {currentUser, signOut} = useAuth();
-  const [query, setQuery] = useState('life');
+  const [query, setQuery] = useState(0);
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
@@ -34,9 +34,8 @@ const MainNavigation = () => {
         </li>
         <li>
           {!!currentUser
-          ? <button href="#" onClick={signOut}><img className={styles.user__avatar} src={currentUser.photoURL} alt='User avatar'/>Logout</button>
-          : <Link to={Routes.AUTH_SIGN_IN}>Sign In</Link>
-          }    
+          ? <button href="#" onClick={signOut}><img className={styles.user__avatar} src={`https://robohash.org/${currentUser.id}?gravatar=hashed`} alt='User avatar'/>Logout</button>
+          : <Link to={Routes.AUTH_SIGN_IN}>Sign In</Link>}
         </li>
       </ul>
     </nav>

@@ -6,8 +6,10 @@ import * as Routes from '../../routes';
 
 import styles from './MovieListItem.module.scss';
 
-const MovieListItem = ({ movie }) => {
+const MovieListItem = async ({ movie }) => {
   console.log(movie);
+  const movieDb = await getMovieById(movie.id);
+  console.table(movieDb);
 
   return (
     <article className={styles.movielistItem}>
@@ -17,7 +19,10 @@ const MovieListItem = ({ movie }) => {
       <div className={styles.content}>
         <span className={styles.rating}>{movie.vote_average}</span>
         <h3 className={styles.title}><Link to={Routes.MOVIE_DETAILS.replace(':id', movie.id)}>{ movie.title }</Link></h3>
-      </div>   
+      </div>
+      <ul>
+        {}
+      </ul>
       <footer className={styles.meta}>
         <span className={styles.numReviews}><VscPreview /><span>{ movie.vote_count }</span></span>
         <span className={styles.numViews}><FiEye /><span>{ Math.floor(movie.popularity) }</span></span>

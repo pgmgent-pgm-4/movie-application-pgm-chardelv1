@@ -11,28 +11,28 @@ const FirestoreProvider = ({children}) => {
   const { app } = useFirebase();
   const db = app.firestore();
 
-  const getProjects = async () => {
-    const query = db.collection('projects')
+  const getMovies = async () => {
+    const query = db.collection('movies')
       .orderBy('createdAt', 'desc');
     const querySnapshot = await query.get();
-    const projects = querySnapshot.docs.map((doc) => {
+    const movies = querySnapshot.docs.map((doc) => {
       return {
         uid: doc.id,
         ...doc.data()
       }
     });
-    return projects;
+    return movies;
   };
 
-  const getPagedProjects = async (itemsPerPage = 10, lastVisible = null) => {
+  const getPagedMovies = async (itemsPerPage = 10, lastVisible = null) => {
     let query = null;
 
     if (lastVisible === null) {
-      query = db.collection('projects')
+      query = db.collection('movies')
       .orderBy('createdAt', 'desc')      
       .limit(itemsPerPage);
     } else {
-      query = db.collection('projects')
+      query = db.collection('movies')
       .orderBy('createdAt', 'desc')
       .startAfter(lastVisible)
       .limit(itemsPerPage);
@@ -40,17 +40,17 @@ const FirestoreProvider = ({children}) => {
     
     const querySnapshot = await query.get();
     const lastVisibleDoc = querySnapshot.docs[querySnapshot.docs.length-1];
-    const projects = querySnapshot.docs.map((doc) => {
+    const movies = querySnapshot.docs.map((doc) => {
       return {
         uid: doc.id,
         ...doc.data()
       }
     });
-    return {projects, itemsPerPage, lastVisibleDoc};
+    return {movies, itemsPerPage, lastVisibleDoc};
   };
 
-  const getProjectById = async (projectId) => {
-    const docRef = db.collection('projects').doc(projectId);
+  const getMovieById = async (movieId) => {
+    const docRef = db.collection('movies').doc(movieId);
     const doc = await docRef.get();
     if (!doc.exists) {
         throw new Error('Document does not exist!');
@@ -62,23 +62,35 @@ const FirestoreProvider = ({children}) => {
     }
   };
 
-  const getProjectReviews = async (projectId) => {
-    const query = db.collection('projects').doc(projectId).collection('reviews').orderBy('createdAt', 'desc');
+  const getMovieComments = async (movieId) => {
+    const query = db.collection('movies').doc(movieId).collection('comments').orderBy('createdAt', 'desc');
     const querySnapshot = await query.get();
-    const projectReviews = querySnapshot.docs.map((doc) => {
+    const movieComments = querySnapshot.docs.map((doc) => {
       return {
         uid: doc.id,
         ...doc.data()
       }
     });
-    return projectReviews;
+    return movieComments;
   };
 
-  const addReview = async (projectRef, review) => {
-    var reviewRef = projectRef.collection('reviews').doc(uuidv4());
+  const getMovieReviews = async (movieId) => {
+    const query = db.collection('movies').doc(movieId).collection('reviews').orderBy('createdAt', 'desc');
+    const querySnapshot = await query.get();
+    const movieReviews = querySnapshot.docs.map((doc) => {
+      return {
+        uid: doc.id,
+        ...doc.data()
+      }
+    });
+    return movieReviews;
+  };
+
+  const addMovieReview = async (movieRef, review) => {
+    var reviewRef = movieRef.collection('reviews').doc(uuidv4());
 
     return db.runTransaction((transaction) => {
-        return transaction.get(projectRef).then((res) => {
+        return transaction.get(movieRef).then((res) => {
             if (!res.exists) {
                 throw new Error('Document does not exist!');
             }
@@ -91,7 +103,127 @@ const FirestoreProvider = ({children}) => {
             var newAvgRating = (oldRatingTotal + review.rating) / newNumReviews;
 
             // Commit to Firestore
-            transaction.update(projectRef, {
+            transaction.update(movieRef, {
+                numReviews: newNumReviews,
+                avgRating: newAvgRating
+            });
+            transaction.set(reviewRef, review);
+        });
+    });
+  }
+  const getTvShows = async () => {
+    const query = db.collection('tv')
+      .orderBy('createdAt', 'desc');
+    const querySnapshot = await query.get();
+    const tvShows = querySnapshot.docs.map((doc) => {
+      return {
+        uid: doc.id,
+        ...doc.data()
+      }
+    });
+    return movies;
+  };
+
+  const getPagedTvShows = async (itemsPerPage = 10, lastVisible = null) => {
+    let query = null;
+
+    if (lastVisible === null) {
+      query = db.collection('tv')
+      .orderBy('createdAt', 'desc')      
+      .limit(itemsPerPage);
+    } else {
+      query = db.collection('tv')
+      .orderBy('createdAt', 'desc')
+      .startAfter(lastVisible)
+      .limit(itemsPerPage);
+    }
+    
+    const querySnapshot = await query.get();
+    const lastVisibleDoc = querySnapshot.docs[querySnapshot.docs.length-1];
+    const tvShows = querySnapshot.docs.map((doc) => {
+      return {
+        uid: doc.id,
+        ...doc.data()
+      }
+    });
+    return {tvShows, itemsPerPage, lastVisibleDoc};
+  };
+
+  const getTvShowById = async (tvShowId) => {
+    const docRef = db.collection('tv').doc(tvShowId);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+        throw new Error('Document does not exist!');
+    }
+
+    return {
+      uid: doc.id,
+      ...doc.data()
+    }
+  };
+
+  const getTvShowReviews = async (tvShowId) => {
+    const query = db.collection('tv').doc(tvShowId).collection('reviews').orderBy('createdAt', 'desc');
+    const querySnapshot = await query.get();
+    const tvShowReviews = querySnapshot.docs.map((doc) => {
+      return {
+        uid: doc.id,
+        ...doc.data()
+      }
+    });
+    return tvShowReviews;
+  };
+
+  const getTvShowComments = async (tvShowId) => {
+    const query = db.collection('tv').doc(tvShowId).collection('comments').orderBy('createdAt', 'desc');
+    const querySnapshot = await query.get();
+    const tvShowComments = querySnapshot.docs.map((doc) => {
+      return {
+        uid: doc.id,
+        ...doc.data()
+      }
+    });
+    return tvShowComments;
+  };
+
+  const addCommentToRef = async (parentRef, comment) => {
+    var commentRef = parentRef.collection('comments').doc(uuidv4());
+
+    return db.runTransaction((transaction) => {
+      return transaction.get(parentRef).then((res) => {
+        if (!res.exists) {
+          throw new Error('Document does not exist!');
+        }
+
+        // Compute new number of comments
+        var newNumComments = res.data().numComments + 1;
+
+        transaction.update(parentRef, {
+          numComments: newNumComments
+        });
+        transaction.set(commentRef, comment);
+      })
+    })
+  }
+
+  const addTvShowReview = async (tvShowRef, review) => {
+    var reviewRef = tvShowRef.collection('reviews').doc(uuidv4());
+
+    return db.runTransaction((transaction) => {
+        return transaction.get(tvShowRef).then((res) => {
+            if (!res.exists) {
+                throw new Error('Document does not exist!');
+            }
+
+            // Compute new number of reviews
+            var newNumReviews = res.data().numReviews + 1;
+
+            // Compute new average rating
+            var oldRatingTotal = res.data().avgRating * res.data().numReviews;
+            var newAvgRating = (oldRatingTotal + review.rating) / newNumReviews;
+
+            // Commit to Firestore
+            transaction.update(tvShowRef, {
                 numReviews: newNumReviews,
                 avgRating: newAvgRating
             });
@@ -101,7 +233,7 @@ const FirestoreProvider = ({children}) => {
   }
 
   return (
-    <FirestoreContext.Provider value={{addReview, getPagedProjects, getProjectById, getProjects, getProjectReviews}}>
+    <FirestoreContext.Provider value={{addCommentToRef, addMovieReview, getPagedMovies, getMovieById, getMovieComments, getMovies, getMovieReviews, addTvShowReview, getPagedTvShows, getTvShowComments, getTvShowById, getTvShows, getTvShowReviews}}>
       {children}
     </FirestoreContext.Provider>
   );

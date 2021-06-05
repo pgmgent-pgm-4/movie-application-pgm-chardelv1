@@ -29,11 +29,11 @@ import fetchData from './fetchData';
       const response = await fetchData('discover/movie', `&page=${page}`);
       const jsonData = await response.json();
       console.log(jsonData)
-      
       const promises = [];
       jsonData.results.forEach(movie => {
         promises.push(createMovie(movie));
       });
+      db.collection('counters').doc('movies').set({numAmount: jsonData.results.length}, {merge: true});
       return await Promise.all(promises);
     } catch (error) {
       console.error(error);
