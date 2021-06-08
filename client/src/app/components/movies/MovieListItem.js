@@ -11,7 +11,7 @@ import styles from './MovieListItem.module.scss';
 const MovieListItem = ({ movie }) => {
   const [dbMovie, setDbMovie] = useState();
   const { getMovieById } = useFirestore();
-  console.log(movie.id)
+  // console.log(movie.id)
   
   const fetchData = useCallback(
     async () => {
@@ -19,6 +19,7 @@ const MovieListItem = ({ movie }) => {
         const data = await getMovieById((movie.id).toString());
         setDbMovie(data);
       } catch (err) {
+        console.log(movie.id)
         console.error(err, (movie.id).toString())
       }
       },
@@ -40,7 +41,7 @@ const MovieListItem = ({ movie }) => {
       <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
       </picture>
       <div className={styles.content}>
-        <span className={styles.rating}>{movie.vote_average}</span>
+        {dbMovie && <span className={styles.rating}>{Math.round(dbMovie.avgRating / 5 * 100)}</span>}
         <h3 className={styles.title}>{ movie.title }</h3>
         <p>Release date: {parseReleaseDate(movie.release_date)}</p>
       </div>
@@ -48,8 +49,9 @@ const MovieListItem = ({ movie }) => {
        
       </ul>
       <footer className={styles.meta}>
-        <span className={styles.numReviews}><VscPreview /><span>{ movie.vote_count }</span></span>
-        <span className={styles.numViews}><FiEye /><span>{ Math.floor(movie.popularity) }</span></span>
+        {dbMovie && <span className={styles.numReviews}><VscPreview /><span>{ dbMovie.numReviews }</span></span>}
+        {dbMovie && <span className={styles.numViews}><FiEye /><span>{ dbMovie.numViews }</span></span>}
+        {!dbMovie && <p>{movie.id}</p>}
       </footer>   
       </Link>
     </article>
