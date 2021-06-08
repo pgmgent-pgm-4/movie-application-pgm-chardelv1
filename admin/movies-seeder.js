@@ -26,14 +26,24 @@ import fetchData from './fetchData';
   // Create movies via promises
   const createMovies = async (page) => {
     try {
-      const response = await fetchData('discover/movie', `&page=${page}`);
-      const jsonData = await response.json();
-      console.log(jsonData)
+      const response1 = await fetchData('discover/movie', `&sort_by=popularity.desc`);
+      const jsonData1 = await response1.json();
+      const response2 = await fetchData('discover/movie', `&release_year.lte'2022'`);
+      const jsonData2 = await response2.json();
+      const response3 = await fetchData('discover/movie', '&sort_by=release_date.desc');
+      const jsonData3 = await response3.json();
+      
       const promises = [];
-      jsonData.results.forEach(movie => {
+      jsonData1.results.forEach(movie => {
         promises.push(createMovie(movie));
       });
-      db.collection('counters').doc('movies').set({numAmount: jsonData.results.length}, {merge: true});
+      jsonData2.results.forEach(movie => {
+        promises.push(createMovie(movie));
+      });
+      jsonData3.results.forEach(movie => {
+        promises.push(createMovie(movie));
+      });
+      db.collection('counters').doc('movies').set({numAmount: jsonData.results.length * 3}, {merge: true});
       return await Promise.all(promises);
     } catch (error) {
       console.error(error);

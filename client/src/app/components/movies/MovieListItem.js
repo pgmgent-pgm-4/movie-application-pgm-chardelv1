@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from 'react';
 import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 import { Link } from 'react-router-dom';
@@ -8,6 +9,26 @@ import * as Routes from '../../routes';
 import styles from './MovieListItem.module.scss';
 
 const MovieListItem = ({ movie }) => {
+  const [dbMovie, setDbMovie] = useState();
+  const { getMovieById } = useFirestore();
+  console.log(movie.id)
+  
+  const fetchData = useCallback(
+    async () => {
+      try {
+        const data = await getMovieById((movie.id).toString());
+        setDbMovie(data);
+      } catch (err) {
+        console.error(err, (movie.id).toString())
+      }
+      },
+      [getMovieById, (movie.id).toString()]);
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData]);
+
+  console.log(dbMovie);
   const parseReleaseDate = (date) => {
     const parsedDate = new Date(date);
     return parsedDate.toISOString().split('T')[0];
@@ -20,7 +41,7 @@ const MovieListItem = ({ movie }) => {
       </picture>
       <div className={styles.content}>
         <span className={styles.rating}>{movie.vote_average}</span>
-        <h3 className={styles.title}><Link to={Routes.MOVIE_DETAILS.replace(':id', movie.id)}>{ movie.title }</Link></h3>
+        <h3 className={styles.title}>{ movie.title }</h3>
         <p>Release date: {parseReleaseDate(movie.release_date)}</p>
       </div>
       <ul>

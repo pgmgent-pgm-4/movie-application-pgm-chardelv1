@@ -1,14 +1,17 @@
 .showlistItem {
-/*     overflow:hidden;
-    flex-basis: 400px;
-    width: 30%; */
     flex: 0 0 auto;
+    position: relative;
     display: flex;
     flex-direction: column;
     border: 1px solid #e3e3e3;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     background-color: #fff;
+
+    & a {
+        text-decoration: none;
+        color: #262626;
+    }
 
     & .picture {
         display: block;
@@ -50,18 +53,23 @@
 
     & .rating {
         position: absolute;
-        top: -16px;
-        left: 16px;
+        top: -4.5rem;
+        left: 1rem;
         display: block;
-        width: 32px;
-        height: 32px;
+        width: 3rem;
+        height: 3rem;
         border-radius: 50%;
+        padding: .5rem;
 
-        background: rgba(0, 0, 0, 1);
+        background: rgba(255, 33, 44, .8);
         color: rgba(255, 255, 255, 1);
 
         text-align: center;
-        line-height: 32px;
-        font-size: 0.8rem;
+        line-height: 40px;
+        font-size: 1.2rem;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        > sup {
+            padding-left: .1rem;
+        }
     }
 }

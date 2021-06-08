@@ -11,13 +11,13 @@ const useFetch = (endpoint, queryParams = '') => {
   let params = '';
   if (queryParams !== '') {
     params = `&${queryParams}`;
-  }
+  };
+  console.log(queryParams)
   const [data, setData] = useState([]);
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const apiUrl = `https://api.themoviedb.org/3/${endpoint}?api_key=${appConfig.tmdbApiKey}${params}`;
   console.log(apiUrl)
-  const searchUrl = "https://api.themoviedb.org/3/search/multi?api_key=77a730ff683e532669abfe709209746d&language=en-US&query=zoo&page=1&include_adult=false"
 
   const getData = async () => {
     try {

@@ -25,14 +25,27 @@ import fetchData from './fetchData';
   // Create TV shows via promises
   const createTvShows = async (page) => {
     try {
-      const response = await fetchData('discover/tv', `&page=${page}`);
-      const jsonData = await response.json();
+      const response1 = await fetchData('discover/tv', `&sort_by=popularity.desc`);
+      const jsonData1 = await response1.json();
+      const response2 = await fetchData('discover/tv', `&sort_by=first_air_date&first_air_date_year=2021&timezone=America%2FNew_York&language=en_US`);
+      const jsonData2 = await response2.json();
+      const response3 = await fetchData('discover/tv', '&sort_by=first_air_date.desc&first_air_date.gte=2021&timezone=America%2FNew_York&language=en_US');
+      const jsonData3 = await response3.json();
 
       const promises = [];
-      jsonData.results.forEach(tvShow => {
+      jsonData1.results.forEach(tvShow => {
         promises.push(createTvShow(tvShow));
       });
-      db.collection('counters').doc('tv').set({numAmount: jsonData.results.length}, {merge: true});
+      
+      jsonData2.results.forEach(tvShow => {
+        promises.push(createTvShow(tvShow));
+      });
+
+      jsonData3.results.forEach(tvShow => {
+        promises.push(createTvShow(tvShow));
+      });
+
+      db.collection('counters').doc('tv').set({numAmount: jsonData1.results.length * 3}, {merge: true});
       return await Promise.all(promises);
     } catch (error) {
       console.error(error);
@@ -40,9 +53,4 @@ import fetchData from './fetchData';
   };
 
   await createTvShows(1);
-/*   await createTvShows(5);
-  await createTvShows(10); */
-  /* const nShows = await (await db.collection('tv').get()).size;
-  console.log(nShows)
-  db.collection('counters').doc('tv').set({numAmount: nShows}, {merge: true}); */
 })();

@@ -1,28 +1,31 @@
 import { useFirestore } from "../../contexts/firebase/firestore.context";
 import useFetch from '../../hooks/useFetch';
 
-import ShowListItem from './MovieListItem';
+import ShowListItem from './ShowListItem';
 import styles from './FilteredShowList.module.scss';
 
 const ShowList = ({filter}) => {
+  console.log(filter)
   const [data, isLoading, error] = useFetch('discover/tv', filter)
   const tv = data.results;
   let filteredShows = tv;
-  if (filter.includes('release_year.lte') && tv) {
+  console.log('filter: ', filter);
+  console.log('results: ', filteredShows);
+/*   if (filter.includes('first_air_date_year') && tv) {
     filteredShows = tv.sort(
       (a, b) => 
       a.release_date < b.release_date
     )
-  };
-  if (filter.includes('sort_by=release_date') && tv) {
+  }; */
+  if (filter.includes('first_air_date.gte=2021') && tv) {
     let firstFilter = tv.sort(
       (a, b) => 
-      a.release_date > b.release_date
+      a.first_air_date.split('-')[0] > b.first_air_date.split('-')[0]
     );
-    filteredShows = firstFilter.filter(show => parseInt(show.release_date) > 2021)
+    filteredShows = firstFilter.filter(show => parseInt(show.first_air_date_year) !== 1970)
     console.log(filteredShows)
   };
-  if (!!tv && tv.length > 0) filteredShows = filteredShows.filter(show => show.poster_path !== null).slice(0, 6);
+  if (!!tv && tv.length > 0) filteredShows = filteredShows.filter(show => show.poster_path !== null)//.slice(0, 6); 
   
   return (
     <div className={styles.showList}>
