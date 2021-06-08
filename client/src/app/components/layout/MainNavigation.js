@@ -11,7 +11,7 @@ import styles from './MainNavigation.module.scss';
 
 const MainNavigation = () => {
   const {currentUser, signOut} = useAuth();
-  const [query, setQuery] = useState(0);
+  const [query, setQuery] = useState();
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
