@@ -41,7 +41,7 @@ const MovieListItem = ({ movie }) => {
       <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
       </picture>
       <div className={styles.content}>
-        {dbMovie && <span className={styles.rating}>{Math.round(dbMovie.avgRating / 5 * 100)}</span>}
+        {dbMovie && <span className={styles.rating}>{Math.round(dbMovie.avgRating / 5 * 100)}<sup>%</sup></span>}
         <h3 className={styles.title}>{ movie.title }</h3>
         <p>Release date: {parseReleaseDate(movie.release_date)}</p>
       </div>

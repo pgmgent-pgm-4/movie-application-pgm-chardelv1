@@ -1,30 +1,33 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
+import { useFirestore } from '../../contexts/firebase/firestore.context';
 
 import useFetch from '../../hooks/useFetch';
 import styles from './ShowDetails.module.scss';
 
 const ShowDetails = ({ id }) => {
+  const [show, showIsLoading, showError] = useFetch(`/tv/${id}`, 'append_to_response=videos,images');
+
   const [tvShow, setTvShow] = useState();
   const { getTvShowById } = useFirestore();
   //console.log(show.id)
   
   const fetchData = useCallback(
     async () => {
-      try {
-        const data = await getTvShowById((show.id).toString());
-        setTvShow(data);
-      } catch (err) {
-        console.error(err, (show.id).toString())
-      }
+        try {
+          const data = await getTvShowById((id).toString());
+          setTvShow(data);
+        } catch (err) {
+          console.error(err, (id).toString())
+        }
       },
-      [getTvShowById, (show.id).toString()]);
+      [getTvShowById, (id).toString()]);
 
   useEffect(() => {
     fetchData()
   }, [fetchData]);
-  const [show, showIsLoading, showError] = useFetch(`/tv/${id}`, 'append_to_response=videos,images');
+  
   
   
   const Video = ({video}) => {

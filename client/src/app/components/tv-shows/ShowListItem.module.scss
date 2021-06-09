@@ -3,20 +3,19 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    border: 1px solid #e3e3e3;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    background-color: #fff;
+    background-color: var(--background-color);
 
-    & a {
+    a {
         text-decoration: none;
-        color: #262626;
+        color: var(--text-color);
     }
 
     & .picture {
         display: block;
-        width: 14rem;
-        height: 65%;        
+        width: 16rem;      
 
         & > img {
             box-sizing: border-box;
@@ -47,7 +46,7 @@
         align-content: center;
         justify-content: space-between;
 
-        border-top: 1px solid #e3e3e3;
+        border-top: 1px solid var(--border-color);
         padding: 8px 16px;
     }
 

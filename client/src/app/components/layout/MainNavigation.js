@@ -4,6 +4,8 @@ import {
   Link, Route
 } from "react-router-dom";
 
+import ThemeToggler from '../theme/ThemeToggler';
+
 import * as Routes from '../../routes';
 import { useAuth } from '../../contexts/firebase/auth.context';
 
@@ -38,6 +40,9 @@ const MainNavigation = () => {
           : <Link to={Routes.AUTH_SIGN_IN}>Sign In</Link>}
         </li>
       </ul>
+      <div>
+        <ThemeToggler />
+      </div>
     </nav>
   );
 };

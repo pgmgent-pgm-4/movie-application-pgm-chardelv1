@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AuthProvider, FirebaseProvider } from './contexts/firebase';
 
@@ -12,12 +13,15 @@ import {
   ShowsPage,
   SignInPage,
 } from './pages';
+import { ThemeContext } from './contexts/ThemeContext';
 import { FirestoreProvider } from './contexts/firebase/firestore.context';
 import ResultsPage from './pages/ResultsPage';
 
 function App() {
+  const [ theme, setTheme ] = useState('light');
   return (
-    <div className={styles.app}>
+    <ThemeContext.Provider value={{theme, setTheme}}>
+    <div className={styles.app} data-theme={theme}>
       <FirebaseProvider>
         <AuthProvider>
           <FirestoreProvider>
@@ -49,6 +53,7 @@ function App() {
         </AuthProvider>
       </FirebaseProvider>
     </div>
+    </ThemeContext.Provider>
   );
 }
 
