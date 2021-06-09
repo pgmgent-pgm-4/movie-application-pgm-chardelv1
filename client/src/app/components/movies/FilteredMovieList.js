@@ -20,7 +20,7 @@ const MovieList = ({filter}) => {
       a.release_date > b.release_date
     );
     filteredMovies = firstFilter.filter(movie => parseInt(movie.release_date) > 2021)
-    console.log(filteredMovies)
+    //console.log(filteredMovies)
   };
   if (!!movies && movies.length > 0) filteredMovies = filteredMovies.filter(movie => movie.poster_path !== null).slice(0, 6);
   

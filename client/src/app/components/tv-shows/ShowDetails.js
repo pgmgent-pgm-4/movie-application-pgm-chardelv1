@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from 'react';
 import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 
@@ -5,16 +6,31 @@ import useFetch from '../../hooks/useFetch';
 import styles from './ShowDetails.module.scss';
 
 const ShowDetails = ({ id }) => {
-  console.log(id)
+  const [tvShow, setTvShow] = useState();
+  const { getTvShowById } = useFirestore();
+  //console.log(show.id)
+  
+  const fetchData = useCallback(
+    async () => {
+      try {
+        const data = await getTvShowById((show.id).toString());
+        setTvShow(data);
+      } catch (err) {
+        console.error(err, (show.id).toString())
+      }
+      },
+      [getTvShowById, (show.id).toString()]);
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData]);
   const [show, showIsLoading, showError] = useFetch(`/tv/${id}`, 'append_to_response=videos,images');
-  console.log(show)
-  const [credits, creditsLoading, creditsError] = useFetch(`/tv/${id}/credits`);
-  const [contentRating, contentRatingLoading, contentRatingError] = useFetch(`/tv/${id}/content_ratings`);
+  
   
   const Video = ({video}) => {
     return (
       <div className={styles.videoContainer}>
-      <iframe width="100%" height="56%" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+        <iframe width="100%" height="56%" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
       </div>)
   }
   return (

@@ -29,7 +29,7 @@ const MovieListItem = ({ movie }) => {
     fetchData()
   }, [fetchData]);
 
-  console.log(dbMovie);
+  //console.log(dbMovie);
   const parseReleaseDate = (date) => {
     const parsedDate = new Date(date);
     return parsedDate.toISOString().split('T')[0];

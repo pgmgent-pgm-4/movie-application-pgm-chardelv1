@@ -28,7 +28,6 @@ const ShowListItem = ({ show }) => {
     useEffect(() => {
       fetchData()
     }, [fetchData]);
-    console.log(tvShow)
     
   const parseReleaseDate = (date) => {
     const parsedDate = new Date(date);

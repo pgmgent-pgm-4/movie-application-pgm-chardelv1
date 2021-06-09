@@ -14,7 +14,6 @@ const MovieDetails = ({ id }) => {
       name: writer.name
     }
     });
-  console.log(movie)
 
   const Video = ({video}) => {
     return (
