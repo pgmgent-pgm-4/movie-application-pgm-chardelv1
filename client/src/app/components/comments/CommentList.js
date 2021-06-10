@@ -6,9 +6,9 @@ import CommentListItem from './CommentListItem';
 const CommentList = ({comments, subjectType, subjectId}) => {
   return (
     <div>
-      <CommentForm subjectId={subjectId} subjectType={subjectType}/>
+      {/* <CommentForm subjectId={subjectId} subjectType={subjectType}/> */}
       <ul className={styles.commentList}>
-        {comments && comments.map((comment, index) => <CommentListItem key={index} comment={comment} />)}
+        {comments && comments.map((comment, index) => <CommentListItem key={index} comment={comment} subjectId={subjectId} subjectType={subjectType}/>)}
       </ul>
     </div>
   )

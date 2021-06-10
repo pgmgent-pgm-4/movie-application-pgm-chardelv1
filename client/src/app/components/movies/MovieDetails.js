@@ -3,6 +3,7 @@ import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 
 import { useFirestore } from '../../contexts/firebase/firestore.context';
+import CommentList from '../comments/CommentList';
 import useFetch from '../../hooks/useFetch'
 import styles from './MovieDetails.module.scss';
 
@@ -21,6 +22,7 @@ const MovieDetails = ({ id }) => {
             const movieData = await getMovieById((id).toString());
             setDbMovie(movieData);
             const commentData = await getMovieComments((id).toString());
+            setMovieComments(commentData);
           } catch (err) {
             console.error(err, (id).toString())
           }
@@ -40,41 +42,37 @@ const MovieDetails = ({ id }) => {
   }
 
   return (
-    <>
-    {movie &&
-    <div className={styles.movielistItemContainer}>
-      <article className={styles.movielistItem}>
-        <div className={styles.visualInfo}>
-          <picture className={styles.picture}>
-            <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
-          </picture>
-          <div className={styles.content}>
-            {dbMovie && <span className={styles.rating}>{Math.round(dbMovie.avgRating / 5 * 100)}<sup>%</sup></span>}
-            <h3 className={styles.title}>{ movie.title }</h3>
-          </div>   
-          <footer className={styles.meta}>
-            {dbMovie && <span className={styles.numReviews}><VscPreview /><span>{ dbMovie.numReviews }</span></span>}
-            {dbMovie && <span className={styles.numViews}><FiEye /><span>{ dbMovie.numViews }</span></span>}
-          </footer>
-        </div>
-        <div className={styles.textInfo}>
-          <h1>{movie.title}</h1>
-          <h2>{movie.tagline}</h2>
-          <a href={movie.homepage} title={movie.title}>{movie.title} homepage</a>
-          <h2>Synopsis:</h2>
-          <p>{movie.overview}</p>
-          <p><span></span></p>
-          {movie.videos && <Video video={movie.videos.results[0]}/>}
-        </div>
-      </article>
-      <section className={styles.movieComments}>
-        {dbMovie && dbMovie.comments}
-      </section>
+    <div className={styles.movie}>
+      {movie &&
+      <div className={styles.movielistItemContainer}>
+        <article className={styles.movielistItem}>
+          <div className={styles.visualInfo}>
+            <picture className={styles.picture}>
+              <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
+            </picture>
+            <div className={styles.content}>
+              {dbMovie && <span className={styles.rating}>{Math.round(dbMovie.avgRating / 5 * 100)}<sup>%</sup></span>}
+              <h3 className={styles.title}>{ movie.title }</h3>
+            </div>   
+            <footer className={styles.meta}>
+              {dbMovie && <span className={styles.numReviews}><VscPreview /><span>{ dbMovie.numReviews }</span></span>}
+              {dbMovie && <span className={styles.numViews}><FiEye /><span>{ dbMovie.numViews }</span></span>}
+            </footer>
+          </div>
+          <div className={styles.textInfo}>
+            <h1>{movie.title}</h1>
+            <h2>{movie.tagline}</h2>
+            <a href={movie.homepage} title={movie.title}>{movie.title} homepage</a>
+            <h2>Synopsis:</h2>
+            <p>{movie.overview}</p>
+          </div>
+        </article>
+        <CommentList key={id} comments={movieComments} subjectType='movies' subjectId={id} />
+      </div>
+      }
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error! {error.message}</p>}
     </div>
-    }
-    {isLoading && <p>Loading...</p>}
-    {error && <p>Error! {error.message}</p>}
-    </>
   )
 };
 

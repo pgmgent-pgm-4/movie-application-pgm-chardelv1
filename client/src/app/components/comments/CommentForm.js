@@ -3,7 +3,7 @@ import { FiSend } from 'react-icons/fi';
 import styles from './CommentForm.module.scss';
 import { useFirestore } from '../../contexts/firebase/firestore.context';
 
-const CommentForm = ({subjectType, subjectId}) => {
+const CommentForm = ({subjectType, subjectId, colType = null, colId = null}) => {
   const [dbComment, setDbComment] = useState();
   const { addCommentToRef } = useFirestore();
 
@@ -32,14 +32,14 @@ const CommentForm = ({subjectType, subjectId}) => {
     async () => {
       console.log(dbComment)
       try {
-        const data = await addCommentToRef(subjectType, (subjectId).toString(), dbComment);
+        const data = await addCommentToRef(subjectType, (subjectId).toString(), colType, (colId).toString(), dbComment);
         console.log(data);
-        window.location.reload(false);
+        // window.location.reload();
       } catch (error) {
         console.error(error);
       }
     },
-    [addCommentToRef, dbComment, (subjectId).toString(), subjectType]
+    [addCommentToRef, dbComment, colId, colType, (subjectId).toString(), subjectType]
   );
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const CommentForm = ({subjectType, subjectId}) => {
 
   return (
     <form className={styles.CommentForm} onSubmit={handleSubmit}>
-      <textarea name="commentText" placeholder='Leave a comment...' required allowResize='false'></textarea>
+      <textarea name="commentText" placeholder='Leave a comment...' required></textarea>
       <button type="submit" value="Submit"><FiSend /></button>
     </form>
   )

@@ -186,9 +186,27 @@ const FirestoreProvider = ({children}) => {
     return tvShowComments;
   };
 
-  const addCommentToRef = async (docType, docId, comment) => {
-    const parentRef = db.collection(docType).doc(docId.toString());
-    const commentRef = parentRef.collection('comments').doc(uuidv4());
+  const getCommentComments = async (docType, docId, commentId) => {
+    const query = db.collection(docType).doc(docId).collection('comments').doc(commentId).collection('comments').orderBy('createdAt', 'desc');
+    const querySnapshot = await query.get();
+    const commentComments = querySnapshot.docs.map((doc) => {
+      return {
+        uid: doc.id,
+        ...doc.data()
+      }
+    });
+    return commentComments;
+  }
+
+  const addCommentToRef = async (docType, docId, colType = null, colId = null, comment) => {
+    const parentRef = db.collection(docType).doc(docId);
+    let commentRef;
+    if (!colType) {
+      commentRef = parentRef.collection(docType).doc(uuidv4());
+    } else {
+      let childRef = parentRef.collection(colType).doc(colId);
+      commentRef = childRef.collection(colType).doc(uuidv4());
+    }
 
     return db.runTransaction((transaction) => {
       return transaction.get(parentRef).then((res) => {
@@ -234,7 +252,7 @@ const FirestoreProvider = ({children}) => {
   }
 
   return (
-    <FirestoreContext.Provider value={{addCommentToRef, addMovieReview, getPagedMovies, getMovieById, getMovieComments, getMovies, getMovieReviews, addTvShowReview, getPagedTvShows, getTvShowComments, getTvShowById, getTvShows, getTvShowReviews}}>
+    <FirestoreContext.Provider value={{addCommentToRef, addMovieReview, getPagedMovies, getMovieById, getMovieComments, getMovies, getMovieReviews, addTvShowReview, getPagedTvShows, getCommentComments, getTvShowComments, getTvShowById, getTvShows, getTvShowReviews}}>
       {children}
     </FirestoreContext.Provider>
   );
