@@ -11,23 +11,23 @@ import styles from './ShowListItem.module.scss';
 
 const ShowListItem = ({ show }) => {
   const [tvShow, setTvShow] = useState();
-    const { getTvShowById } = useFirestore();
+  const { getTvShowById } = useFirestore();
     //console.log(show.id)
     
-    const fetchData = useCallback(
-      async () => {
-        try {
-          const data = await getTvShowById((show.id).toString());
-          setTvShow(data);
-        } catch (err) {
-          console.error(err, (show.id).toString())
-        }
-        },
-        [getTvShowById, (show.id).toString()]);
+  const fetchData = useCallback(
+    async () => {
+      try {
+        const data = await getTvShowById((show.id).toString());
+        setTvShow(data);
+      } catch (err) {
+        console.error(err, (show.id).toString())
+      }
+    },
+    [getTvShowById, (show.id).toString()]);
 
-    useEffect(() => {
-      fetchData()
-    }, [fetchData]);
+  useEffect(() => {
+    fetchData()
+  }, [fetchData]);
     
   const parseReleaseDate = (date) => {
     const parsedDate = new Date(date);

@@ -11,7 +11,6 @@ import styles from './MovieListItem.module.scss';
 const MovieListItem = ({ movie }) => {
   const [dbMovie, setDbMovie] = useState();
   const { getMovieById } = useFirestore();
-  // console.log(movie.id)
   
   const fetchData = useCallback(
     async () => {
