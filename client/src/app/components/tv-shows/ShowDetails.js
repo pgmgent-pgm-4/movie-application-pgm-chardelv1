@@ -5,7 +5,7 @@ import { useFirestore } from '../../contexts/firebase/firestore.context';
 
 import useFetch from '../../hooks/useFetch';
 import styles from './ShowDetails.module.scss';
-import CommentList from '../comments/CommentList';
+import { CommentForm, CommentList } from '../comments';
 
 const ShowDetails = ({ id }) => {
   const [show, showIsLoading, showError] = useFetch(`/tv/${id}`, 'append_to_response=videos,images');
@@ -69,6 +69,7 @@ const ShowDetails = ({ id }) => {
           {show.videos && <Video video={show.videos.results[0]}/>}
         </div>
       </article>}
+      <CommentForm subjectId={id} subjectType='tv' />
       <CommentList key={id} comments={tvShowComments} subjectType='tv' subjectId={id}/>
       {showIsLoading && <p>Loading...</p>}
       {showError && <p>Error! {showError.message}</p>}

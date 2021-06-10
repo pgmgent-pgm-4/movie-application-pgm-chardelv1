@@ -34,7 +34,7 @@ const CommentForm = ({subjectType, subjectId, colType = null, colId = null}) => 
       try {
         const data = await addCommentToRef(subjectType, (subjectId).toString(), colType, (colId).toString(), dbComment);
         console.log(data);
-        // window.location.reload();
+        window.location.reload();
       } catch (error) {
         console.error(error);
       }

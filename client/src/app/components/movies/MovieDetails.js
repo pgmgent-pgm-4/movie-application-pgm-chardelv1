@@ -3,7 +3,7 @@ import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 
 import { useFirestore } from '../../contexts/firebase/firestore.context';
-import CommentList from '../comments/CommentList';
+import { CommentForm, CommentList } from '../comments';
 import useFetch from '../../hooks/useFetch'
 import styles from './MovieDetails.module.scss';
 
@@ -65,8 +65,10 @@ const MovieDetails = ({ id }) => {
             <a href={movie.homepage} title={movie.title}>{movie.title} homepage</a>
             <h2>Synopsis:</h2>
             <p>{movie.overview}</p>
+            {movie.videos && <Video video={movie.videos.results[0]}/>}
           </div>
         </article>
+        <CommentForm subjectId={id} subjectType='movies' />
         <CommentList key={id} comments={movieComments} subjectType='movies' subjectId={id} />
       </div>
       }
