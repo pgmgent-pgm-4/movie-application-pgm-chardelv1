@@ -21,8 +21,9 @@ const MovieListItem = ({ movie }) => {
         console.log(movie.id)
         console.error(err, (movie.id).toString())
       }
-      },
-      [getMovieById, (movie.id).toString()]);
+    },
+    [getMovieById, (movie.id).toString()]
+  );
 
   useEffect(() => {
     fetchData()

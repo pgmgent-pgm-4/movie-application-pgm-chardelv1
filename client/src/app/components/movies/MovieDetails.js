@@ -11,13 +11,16 @@ const MovieDetails = ({ id }) => {
   const [credits, creditsLoading, creditsError] = useFetch(`/movie/${id}/credits`);
 
   const [dbMovie, setDbMovie] = useState();
-  const { getMovieById } = useFirestore();
+  const [movieComments, setMovieComments] = useState();
+  const [movieReviews, setMovieReviews] = useState();
+  const { getMovieById, getMovieComments, getMovieReviews } = useFirestore();
   
     const fetchData = useCallback(
       async () => {
           try {
-            const data = await getMovieById((id).toString());
-            setDbMovie(data);
+            const movieData = await getMovieById((id).toString());
+            setDbMovie(movieData);
+            const commentData = await getMovieComments((id).toString());
           } catch (err) {
             console.error(err, (id).toString())
           }

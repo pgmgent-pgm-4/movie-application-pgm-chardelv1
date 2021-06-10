@@ -8,7 +8,7 @@ const CommentList = ({comments, subjectType, subjectId}) => {
     <div>
       <CommentForm subjectId={subjectId} subjectType={subjectType}/>
       <ul className={styles.commentList}>
-        {comments && comments.map(comment => <CommentListItem key={comment.id} comment={comment} />)}
+        {comments && comments.map((comment, index) => <CommentListItem key={index} comment={comment} />)}
       </ul>
     </div>
   )

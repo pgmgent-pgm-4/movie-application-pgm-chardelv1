@@ -1,0 +1,29 @@
+.CommentForm {
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 1rem;
+    max-width: 100%;
+    display: flex;
+    & > textarea {
+        font-size: 1.1rem;
+        padding: 1rem;
+        border-radius: 5pt 0pt 0pt 5pt;
+        resize: none;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        border: 1px solid var(--text-color);
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    & > button {
+        padding: 0 1.5rem;
+        background-color: #5656F4;
+        color: #fff;
+        border: 1px solid #5656F4;
+        border-radius: 0pt 5pt 5pt 0pt;
+        & > svg {
+            font-size: 1.5rem;
+        }
+    }
+}

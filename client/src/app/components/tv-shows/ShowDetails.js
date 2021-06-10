@@ -40,7 +40,7 @@ const ShowDetails = ({ id }) => {
   const Video = ({video}) => {
     return (
       <div className={styles.videoContainer}>
-        <iframe width="100%" height="56%" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+        <iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
       </div>)
   }
   return (
@@ -66,11 +66,10 @@ const ShowDetails = ({ id }) => {
           <a href={show.homepage} title={show.name}>{show.name} homepage</a>
           <h2>Synopsis:</h2>
           <p>{show.overview}</p>
-          <p><span></span></p>
           {show.videos && <Video video={show.videos.results[0]}/>}
         </div>
       </article>}
-      <CommentList comments={tvShowComments} subjectType='tv' subjectId={id}/>
+      <CommentList key={id} comments={tvShowComments} subjectType='tv' subjectId={id}/>
       {showIsLoading && <p>Loading...</p>}
       {showError && <p>Error! {showError.message}</p>}
     </div>

@@ -186,8 +186,9 @@ const FirestoreProvider = ({children}) => {
     return tvShowComments;
   };
 
-  const addCommentToRef = async (parentRef, comment) => {
-    var commentRef = parentRef.collection('comments').doc(uuidv4());
+  const addCommentToRef = async (docType, docId, comment) => {
+    const parentRef = db.collection(docType).doc(docId.toString());
+    const commentRef = parentRef.collection('comments').doc(uuidv4());
 
     return db.runTransaction((transaction) => {
       return transaction.get(parentRef).then((res) => {
