@@ -201,11 +201,13 @@ const FirestoreProvider = ({children}) => {
   const addCommentToRef = async (docType, docId, colType = null, colId = null, comment) => {
     const parentRef = db.collection(docType).doc(docId);
     let commentRef;
-    if (!colType) {
-      commentRef = parentRef.collection(docType).doc(uuidv4());
-    } else {
-      let childRef = parentRef.collection(colType).doc(colId);
+    if (!(!!colType) || !(!!colId)) {
+      commentRef = parentRef.collection('comments').doc(uuidv4());
+    } else if (!!colType && !!colId) {
+      let childRef = parentRef.collection(colType).doc((colId).toString());
       commentRef = childRef.collection(colType).doc(uuidv4());
+    } else {
+      console.log('this shouldn\'t happen')
     }
 
     return db.runTransaction((transaction) => {
