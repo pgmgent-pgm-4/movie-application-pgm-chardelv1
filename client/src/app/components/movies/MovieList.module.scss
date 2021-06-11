@@ -1,7 +1,15 @@
-.movieList {
-    // display: flex;w
-    // width: 100%;
-    overflow-x: auto;
+.moviesContainer {
     display: flex;
-    flex-wrap: nowrap;
+    > .filters {
+        flex-basis: 20%;
+    }
+    > .results {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 80%;
+        > .movieList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
 }

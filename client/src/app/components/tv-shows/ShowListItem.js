@@ -13,6 +13,7 @@ const ShowListItem = ({ show }) => {
   const [tvShow, setTvShow] = useState();
   const { getTvShowById } = useFirestore();
     //console.log(show.id)
+    //console.log(show.genre_ids)
     
   const fetchData = useCallback(
     async () => {
@@ -33,7 +34,7 @@ const ShowListItem = ({ show }) => {
     const parsedDate = new Date(date);
     return parsedDate.toISOString().split('T')[0];
   };
-  console.log(show)
+  // console.log(show)
   return (
     <article className={styles.showlistItem}>
       <Link to={Routes.TVSHOW_DETAILS.replace(':id', show.id)}>
