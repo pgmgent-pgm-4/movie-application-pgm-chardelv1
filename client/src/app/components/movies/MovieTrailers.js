@@ -8,7 +8,7 @@ const MovieTrailers = () => {
   let results = data.results;
   let movies = [];
   if (!!results) movies = results.slice(0,6)
-console.log(results)
+
   return (
     <div className={styles.movieTrailers}>
       {isLoading && <p>Loading...</p>}

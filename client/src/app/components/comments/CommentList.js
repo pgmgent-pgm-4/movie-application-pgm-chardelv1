@@ -3,10 +3,10 @@ import styles from './CommentList.module.scss';
 import CommentForm from './CommentForm';
 import CommentListItem from './CommentListItem';
 
-const CommentList = ({comments, subjectType, subjectId}) => {
+const CommentList = ({comments, subjectType, subjectId, amount = null}) => {
+  if (!!comments && !!amount) comments.length = amount;
   return (
     <div>
-      {/* <CommentForm subjectId={subjectId} subjectType={subjectType}/> */}
       <ul className={styles.commentList}>
         {comments && comments.map((comment, index) => <CommentListItem key={index} comment={comment} subjectId={subjectId} subjectType={subjectType}/>)}
       </ul>

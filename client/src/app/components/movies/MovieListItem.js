@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+
 import { useFirestore } from '../../contexts/firebase/firestore.context';
-
 import * as Routes from '../../routes';
-
 import styles from './MovieListItem.module.scss';
 
 const MovieListItem = ({ movie }) => {
@@ -31,8 +31,7 @@ const MovieListItem = ({ movie }) => {
 
   //console.log(dbMovie);
   const parseReleaseDate = (date) => {
-    const parsedDate = new Date(date);
-    return parsedDate.toISOString().split('T')[0];
+    return (dayjs(date)).format('DD/MM/YYYY');
   }
   return (
     <article className={styles.movielistItem}>

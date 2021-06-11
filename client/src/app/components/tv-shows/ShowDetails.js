@@ -70,7 +70,7 @@ const ShowDetails = ({ id }) => {
         </div>
       </article>}
       <CommentForm subjectId={id} subjectType='tv' />
-      <CommentList key={id} comments={tvShowComments} subjectType='tv' subjectId={id}/>
+      <CommentList key={id} comments={tvShowComments} subjectType='tv' subjectId={id} amount={3}/>
       {showIsLoading && <p>Loading...</p>}
       {showError && <p>Error! {showError.message}</p>}
     </div>

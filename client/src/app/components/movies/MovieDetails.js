@@ -3,11 +3,14 @@ import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 
 import { useFirestore } from '../../contexts/firebase/firestore.context';
+import { useAuth } from '../../contexts/firebase/auth.context';
 import { CommentForm, CommentList } from '../comments';
+import { ReviewForm, ReviewList } from '../reviews';
 import useFetch from '../../hooks/useFetch'
 import styles from './MovieDetails.module.scss';
 
 const MovieDetails = ({ id }) => {
+  const {currentUser} = useAuth();
   const [movie, isLoading, error] = useFetch(`/movie/${id}`, 'append_to_response=videos,images');
   const [credits, creditsLoading, creditsError] = useFetch(`/movie/${id}/credits`);
 
@@ -23,6 +26,8 @@ const MovieDetails = ({ id }) => {
             setDbMovie(movieData);
             const commentData = await getMovieComments((id).toString());
             setMovieComments(commentData);
+            const reviewData = await getMovieReviews((id).toString());
+            setMovieReviews(reviewData);
           } catch (err) {
             console.error(err, (id).toString())
           }
@@ -68,8 +73,17 @@ const MovieDetails = ({ id }) => {
             {movie.videos && <Video video={movie.videos.results[0]}/>}
           </div>
         </article>
+        {!!currentUser && 
+        <div className={styles.review}>
+          <img className={styles.user__avatar} src={`https://robohash.org/${currentUser.id}?gravatar=hashed`} alt='User avatar'/>
+          <button className={styles.leaveReviewButton}>Add a review</button>
+        </div>
+        }
+        <ReviewList reviews={movieReviews} amount={3}/>
+        <h3>Comments</h3>
         <CommentForm subjectId={id} subjectType='movies' />
-        <CommentList key={id} comments={movieComments} subjectType='movies' subjectId={id} />
+        <CommentList key={id} comments={movieComments} subjectType='movies' subjectId={id} amount={3}/>
+        
       </div>
       }
       {isLoading && <p>Loading...</p>}

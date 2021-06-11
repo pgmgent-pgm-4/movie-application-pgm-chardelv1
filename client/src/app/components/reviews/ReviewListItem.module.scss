@@ -1,0 +1,11 @@
+.reviewHeader {
+    display: flex;
+    align-items: center;
+    > .reviewRating {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        margin-right: 1rem;
+    }
+}

@@ -4,7 +4,7 @@ import styles from './MovieTrailer.module.scss';
 
 const MovieTrailer = ({id}) => {
   const [movie, isLoading, error] = useFetch(`/movie/${id}`, '&append_to_response=videos,images');
-  console.log(movie.videos)
+  
   const Video = ({video}) => {
     return (
       <div className={styles.videoContainer}>

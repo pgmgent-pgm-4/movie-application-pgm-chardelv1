@@ -1,5 +1,15 @@
-.showList {
-    overflow-x: auto;
+.showsContainer {
     display: flex;
-    flex-wrap: nowrap;
+    > .filters {
+        flex-basis: 20%;
+    }
+    > .results {
+        display: flex;
+        flex-direction: row;
+        flex-basis: 80%;
+        > .showList {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
 }

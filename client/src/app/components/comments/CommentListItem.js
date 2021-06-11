@@ -12,9 +12,16 @@ import { useFirestore } from '../../contexts/firebase/firestore.context';
 import { CommentForm, CommentList } from './';
 
 const CommentListItem = ({comment, subjectId, subjectType}) => {
+
   const [replyClicked, setReplyClicked] = useState(false);
-  const handleClick = (e) => {
+  const [readMore, setReadMore] = useState(false);
+
+  const handleReply = (e) => {
     setReplyClicked(!replyClicked);
+  }
+
+  const handleReadMore = (e) => {
+    setReadMore(!readMore);
   }
 
   const [comments, setComments] = useState();
@@ -39,10 +46,13 @@ const CommentListItem = ({comment, subjectId, subjectType}) => {
 
   return (
     <div className={styles.CommentListItem}>
-      <h3 className={styles.commentTitle}>{comment.title}</h3>
-      <p>Posted on: {dayjs(new Date(comment.createdAt)).fromNow()}</p>
-      <p>{comment.text}</p>
-      <button className={styles.replyButton} onClick={handleClick}>{!replyClicked && 'Reply'}{!!replyClicked && 'Hide'}</button>
+      <p>Posted on: <strong>{dayjs(new Date(comment.createdAt)).fromNow()}</strong></p>
+      {!readMore && <p>{(comment.text).slice(0,140)}</p>}
+      {!!readMore && comment.text.length > 140 && <p>{comment.text}</p>}
+      {comment.text.length > 140 && 
+        <button className={styles.readMoreButton} onClick={handleReadMore}>{!readMore && 'Read more'}{!!readMore && 'Less'}</button>
+      }
+      <button className={styles.replyButton} onClick={handleReply}>{!replyClicked && 'Reply'}{!!replyClicked && 'Cancel'}</button>
       {!!replyClicked && <CommentForm subjectType={subjectType} subjectId={(subjectId).toString()} colType='comments' colId={(comment.uid).toString()}/>}
       {!!comments && comments.length > 0 && comments.map((comment, index) => <CommentList key={index} subjectType='comment' subjectId={comment.uid} comments={comments}/>)}
     </div>
