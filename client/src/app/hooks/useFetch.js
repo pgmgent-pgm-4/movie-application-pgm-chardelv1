@@ -18,7 +18,6 @@ const useFetch = (endpoint, queryParams = '') => {
   const [isLoading, setIsLoading] = useState(true);
   const apiUrl = `https://api.themoviedb.org/3/${endpoint}?api_key=${appConfig.tmdbApiKey}${params}`;
   
-  console.log(apiUrl)
   const getData = async () => {
     try {
       const response = await fetch(apiUrl);

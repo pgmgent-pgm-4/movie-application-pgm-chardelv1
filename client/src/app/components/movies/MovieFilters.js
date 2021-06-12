@@ -7,7 +7,6 @@ const MovieFilters = ({onFiltersChange}) => {
   const [keywordQuery, setKeywordQuery] = useState('');
   const [genreIds, setGenreIds] = useState();
   const [ratingValues, setRatingValues] = useState();
-  const [filters, setFilters] = useState();
 
   let genres = [];
   if (!!genreData && !!genreData.genres) {
@@ -44,23 +43,20 @@ const MovieFilters = ({onFiltersChange}) => {
     getFilterString();
   };
 
-  const getFilterString = () => {
+  const getFilterString = (keywordQuery, genreIds) => {
     const filterObj = {
       query: keywordQuery,
       genres: genreIds
     }
-    console.log(filterObj)
-    setFilters(filterObj);
+    return filterObj;
   }
 
   useEffect(() => {
     if (typeof onFiltersChange === 'function') {
+      let filters = getFilterString(keywordQuery, genreIds);
       onFiltersChange(filters)
     }
-  }, [filters]);
-
-  console.log(genreIds)
-  console.log(keywordQuery)
+  }, [genreIds, keywordQuery]);
 
   return (
     <form name="filtersForm" onSubmit={handleApplyFilters}>
@@ -70,10 +66,8 @@ const MovieFilters = ({onFiltersChange}) => {
         <button type="submit" className="applyFilterButton" key="button1">Apply Filters</button>
       <h3>By genre</h3>
         {!!genres && genres.map((genre, index) => genre)}
-        <button type="submit" className="applyFilterButton" key="button2">Apply Filters</button>
       <h3>By rating</h3>
 
-        <button type="submit" className="applyFilterButton" key="button3">Apply Filters</button>
     </form>
   )
 }

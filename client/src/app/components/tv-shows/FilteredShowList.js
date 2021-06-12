@@ -1,4 +1,3 @@
-import { useFirestore } from "../../contexts/firebase/firestore.context";
 import useFetch from '../../hooks/useFetch';
 
 import ShowListItem from './ShowListItem';
@@ -9,14 +8,7 @@ const ShowList = ({filter}) => {
   const [data, isLoading, error] = useFetch('discover/tv', filter)
   const tv = data.results;
   let filteredShows = tv;
-  console.log('filter: ', filter);
-  console.log('results: ', filteredShows);
-/*   if (filter.includes('first_air_date_year') && tv) {
-    filteredShows = tv.sort(
-      (a, b) => 
-      a.release_date < b.release_date
-    )
-  }; */
+  
   if (filter.includes('first_air_date.gte=2021') && tv) {
     let firstFilter = tv.sort(
       (a, b) => 

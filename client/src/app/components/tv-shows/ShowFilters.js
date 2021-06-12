@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useFetch from '../../hooks/useFetch';
 import styles from './ShowFilters.module.scss';
 
-const ShowFilters = ({shows}) => {
+const ShowFilters = ({onFiltersChange}) => {
   const [genreData, genreLoading, genreLoadError] = useFetch('genre/tv/list');
+  const [keywordQuery, setKeywordQuery] = useState('');
+  const [genreIds, setGenreIds] = useState();
+  const [ratingValues, setRatingValues] = useState();
   
   let genres = [];
   if (!!genreData && !!genreData.genres) {
@@ -14,18 +17,59 @@ const ShowFilters = ({shows}) => {
         </div>)
       }
     }
-    console.log(genres)
+
+  const handleApplyFilters = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    let formHasGenres = false;
+    let formHasKeywordQuery = false;
+    for (let entry of data) {
+      const [key, ] = entry;
+      if (key == 'genre') formHasGenres = true;
+      if (key == 'searchKeyword') formHasKeywordQuery = true;
+    }
+    
+    if (!!formHasGenres) { 
+      setGenreIds(data.getAll('genre'))
+    } else {
+      setGenreIds();
+    }
+
+    if (!!formHasKeywordQuery) {
+      setKeywordQuery(data.getAll('searchKeyword'))
+    } else {
+      setKeywordQuery('');
+    }
+    getFilterString(keywordQuery, genreIds);
+  };
+
+  const getFilterString = (keywordQuery, genreIds) => {
+    const filterObj = {
+      query: keywordQuery,
+      genres: genreIds
+    }
+    return filterObj;
+  }
+
+  useEffect(() => {
+    if (typeof onFiltersChange === 'function') {
+      let filters = getFilterString(keywordQuery, genreIds);
+      onFiltersChange(filters)
+    }
+  }, [genreIds, keywordQuery]);
+
   return (
-    <div>
+    <form name="filtersForm" onSubmit={handleApplyFilters}>
       <h2>Filter</h2>
-      <h3>By keyword</h3>
-      
+      <h3>By search term</h3>
+        <input type="search" name="searchKeyword" placeholder="Search for a movie..."></input>
+        <button type="submit" className="applyFilterButton" key="button1">Apply Filters</button>       
       <h3>By genre</h3>
         {!!genres && genres.map((genre, index) => genre)}
       <h3>By rating</h3>
 
       
-    </div>
+    </form>
   )
 }
 
