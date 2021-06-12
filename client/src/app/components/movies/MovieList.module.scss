@@ -1,12 +1,22 @@
 .moviesContainer {
     display: flex;
+    flex-direction: column-reverse;
+    @media screen and (min-width: 40rem) {
+        flex-direction: row;
+    }
+
     > .filters {
-        flex-basis: 20%;
+        @media screen and (min-width: 40rem) {
+            flex-basis: 20%;
+            visibility: visible;
+        }
     }
     > .results {
         display: flex;
         flex-direction: column;
-        flex-basis: 80%;
+        @media screen and (min-width: 40rem) {
+            flex-basis: 80%;
+        }
         > .movieList {
             display: flex;
             flex-wrap: wrap;

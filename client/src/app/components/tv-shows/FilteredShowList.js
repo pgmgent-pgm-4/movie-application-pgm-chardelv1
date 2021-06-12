@@ -4,7 +4,6 @@ import ShowListItem from './ShowListItem';
 import styles from './FilteredShowList.module.scss';
 
 const ShowList = ({filter}) => {
-  console.log(filter)
   const [data, isLoading, error] = useFetch('discover/tv', filter)
   const tv = data.results;
   let filteredShows = tv;
@@ -15,7 +14,6 @@ const ShowList = ({filter}) => {
       a.first_air_date.split('-')[0] > b.first_air_date.split('-')[0]
     );
     filteredShows = firstFilter.filter(show => parseInt(show.first_air_date_year) !== 1970)
-    console.log(filteredShows)
   };
   if (!!tv && tv.length > 0) filteredShows = filteredShows.filter(show => show.poster_path !== null)//.slice(0, 6); 
   

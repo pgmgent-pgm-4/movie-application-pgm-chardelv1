@@ -28,8 +28,6 @@ const MovieListItem = ({ movie, type = 'remote' }) => {
     fetchData()
   }, [fetchData]);
 
-  console.log(movie)
-
   const parseReleaseDate = (date) => {
     return (dayjs(date)).format('DD/MM/YYYY');
   }

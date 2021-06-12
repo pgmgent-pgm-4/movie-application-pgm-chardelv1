@@ -6,7 +6,7 @@ const MovieFilters = ({onFiltersChange}) => {
   const [genreData, genreLoading, genreLoadError] = useFetch('genre/movie/list');
   const [keywordQuery, setKeywordQuery] = useState('');
   const [genreIds, setGenreIds] = useState();
-  const [ratingValues, setRatingValues] = useState();
+  // const [ratingValues, setRatingValues] = useState();
 
   let genres = [];
   if (!!genreData && !!genreData.genres) {
@@ -66,7 +66,7 @@ const MovieFilters = ({onFiltersChange}) => {
         <button type="submit" className="applyFilterButton" key="button1">Apply Filters</button>
       <h3>By genre</h3>
         {!!genres && genres.map((genre, index) => genre)}
-      <h3>By rating</h3>
+      {/* <h3>By rating</h3> */}
 
     </form>
   )

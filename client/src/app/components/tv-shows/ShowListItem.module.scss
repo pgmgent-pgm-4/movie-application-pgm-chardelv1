@@ -1,6 +1,6 @@
 .showlistItem {
     flex: 0 0 auto;
-    position: relative;
+    // position: relative;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-color);
@@ -45,6 +45,7 @@
         align-items: center;
         align-content: center;
         justify-content: space-between;
+        margin-top: auto;
 
         border-top: 1px solid var(--border-color);
         padding: 8px 16px;

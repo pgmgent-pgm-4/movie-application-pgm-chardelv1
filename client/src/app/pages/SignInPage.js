@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { useHistory } from "react-router-dom";
+import styles from '../App.module.scss';
 
 import { useAuth } from '../contexts/firebase/auth.context';
 
@@ -26,17 +27,17 @@ const SignInPage = ({children}) => {
   };
 
   return (
-    <div className="page page--sign-in">
+    <div className={styles.pageSignIn}>
       <div className="container">
         <div className="row">
           <div className="col-12 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
             <form onSubmit={(ev) => handleSubmit(ev)}>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label htmlFor="txtEmail">Email address</label>
                 <input type="email" className="form-control" id="txtEmail" name="txtEmail"  aria-describedby="emailHelp" onChange={handleInputChange} value={signInForm.txtEmail} />
                 <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label htmlFor="txtPassword">Password</label>
                 <input type="password" className="form-control" id="txtPassword" name="txtPassword" onChange={handleInputChange} value={signInForm.txtPassword} />
               </div>

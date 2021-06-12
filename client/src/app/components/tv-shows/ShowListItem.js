@@ -35,7 +35,8 @@ const ShowListItem = ({ show }) => {
     <article className={styles.showlistItem}>
       <Link to={Routes.TVSHOW_DETAILS.replace(':id', show.id)}>
       <picture className={styles.picture}>
-        <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${show.poster_path}`} alt={show.name} />
+        {!!show.poster_path && <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${show.poster_path}`} alt={show.name} />}
+        {!(!!show.poster_path) && <img src='https://api.acomart.tv/images/video-placeholder.jpg' alt={show.name} />}
       </picture>
       <div className={styles.content}>
         {tvShow && tvShow.avgRating && <span className={styles.rating}>{Math.round(tvShow.avgRating / 5 * 100)}<sup>%</sup></span>}
