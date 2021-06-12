@@ -39,7 +39,7 @@ const MovieListItem = ({ movie, type = 'remote' }) => {
       </picture>
       <div className={styles.content}>
         {dbMovie && <span className={styles.rating}>{Math.round(dbMovie.avgRating / 5 * 100)}<sup>%</sup></span>}
-        {!dbMovie && <span className={styles.rating}>{movie.vote_average*10}<sup>%</sup></span>}
+        {!dbMovie && <span className={styles.rating}>{Math.floor(movie.vote_average*10)}<sup>%</sup></span>}
         <h3 className={styles.title}>{ movie.title }</h3>
         <p>Release date: {parseReleaseDate(movie.release_date)}</p>
       </div>

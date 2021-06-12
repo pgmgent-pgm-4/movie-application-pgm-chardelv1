@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 
 import { useFirestore } from '../../contexts/firebase/firestore.context';
+import * as Routes from '../../routes';
 import { useAuth } from '../../contexts/firebase/auth.context';
 import { CommentForm, CommentList } from '../comments';
 import { ReviewForm, ReviewList } from '../reviews';
@@ -13,6 +15,15 @@ const MovieDetails = ({ id }) => {
   const {currentUser} = useAuth();
   const [movie, isLoading, error] = useFetch(`/movie/${id}`, 'append_to_response=videos,images');
   const [credits, creditsLoading, creditsError] = useFetch(`/movie/${id}/credits`);
+  const [altTitles, altTitlesLoading, altTitlesError] = useFetch(`movie/${id}/alternative_titles`);
+  const [keywords, keywordsLoading, keywordsError] = useFetch(`movie/${id}/keywords`);
+  const [recommendations, recommendationsLoading, recommendationsError] = useFetch(`movie/${id}/recommendations`);
+  const [watchProviders, watchProvidersLoading, watchProvidersError] = useFetch(`movie/${id}/watch/providers`);
+
+  console.log('Alternative titles: ', altTitles);
+  console.log('keywords', keywords);
+  console.log('Recommendations', recommendations);
+  console.log("watch providers", watchProviders);
 
   const [dbMovie, setDbMovie] = useState();
   const [movieComments, setMovieComments] = useState();
@@ -66,17 +77,31 @@ const MovieDetails = ({ id }) => {
           </div>
           <div className={styles.textInfo}>
             <h1>{movie.title}</h1>
+            <ul className={styles.tagsList}>
+              {!!keywords && !!keywords.keywords && keywords.keywords.map(keyword => <li className={styles.tag} key={keyword.id}>{keyword.name}</li>)}
+            </ul>
             <h2>{movie.tagline}</h2>
             <a href={movie.homepage} title={movie.title}>{movie.title} homepage</a>
+            {!!watchProviders & !!watchProviders.results && watchProviders.results.BE && watchProviders.results.BE.flatrate && <div className={styles.watch}><p>Watch: </p> <img className={styles.providerLogo} src={`https://www.themoviedb.org/t/p/original${watchProviders.results.BE.flatrate[0].logo_path}`} alt={watchProviders.results.BE.flatrate[0].provider_name}/></div>}
             <h2>Synopsis:</h2>
             <p>{movie.overview}</p>
             {movie.videos && <Video video={movie.videos.results[0]}/>}
           </div>
         </article>
+        <h3 className={styles.recommendationsTitle}>If you liked <em>{movie.title}</em>, look out for these movies</h3>
+        <div className={styles.recommendedMoviesList}>
+          {!!recommendations && !!recommendations.results && 
+            recommendations.results.map(
+              rec => 
+                <Link to={Routes.MOVIE_DETAILS.replace(':id', rec.id)}>
+                  <img className={styles.movieImg} src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${rec.poster_path}`} key={rec.id} alt={rec.title} />
+                </Link> 
+              )}
+        </div>
         {!!currentUser && 
         <div className={styles.review}>
           <img className={styles.user__avatar} src={`https://robohash.org/${currentUser.id}?gravatar=hashed`} alt='User avatar'/>
-          <button className={styles.leaveReviewButton}>Add a review</button>
+          {/* <button className={styles.leaveReviewButton}>Add a review</button> */}
         </div>
         }
         <ReviewList reviews={movieReviews} amount={3}/>
