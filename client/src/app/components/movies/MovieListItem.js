@@ -43,9 +43,6 @@ const MovieListItem = ({ movie, type = 'remote' }) => {
         <h3 className={styles.title}>{ movie.title }</h3>
         <p>Release date: {parseReleaseDate(movie.release_date)}</p>
       </div>
-      <ul>
-       
-      </ul>
       <footer className={styles.meta}>
         {dbMovie && <span className={styles.numReviews}><VscPreview /><span>{ dbMovie.numReviews }</span></span>}
         {!dbMovie && <span className={styles.numReviews}><VscPreview /><span>{ movie.vote_count }</span></span>}

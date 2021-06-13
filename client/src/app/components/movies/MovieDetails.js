@@ -3,21 +3,19 @@ import { Link } from 'react-router-dom';
 import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 
+
 import { useFirestore } from '../../contexts/firebase/firestore.context';
 import * as Routes from '../../routes';
 import { useAuth } from '../../contexts/firebase/auth.context';
 import { CommentForm, CommentList } from '../comments';
+import Person from '../people/Person';
 import { ReviewForm, ReviewList } from '../reviews';
 import useFetch from '../../hooks/useFetch'
 import styles from './MovieDetails.module.scss';
 
 const MovieDetails = ({ id }) => {
   const {currentUser} = useAuth();
-  const [movie, isLoading, error] = useFetch(`/movie/${id}`, 'append_to_response=videos,images');
-  const [credits, creditsLoading, creditsError] = useFetch(`/movie/${id}/credits`);
-  const [altTitles, altTitlesLoading, altTitlesError] = useFetch(`movie/${id}/alternative_titles`);
-  const [keywords, keywordsLoading, keywordsError] = useFetch(`movie/${id}/keywords`);
-  const [recommendations, recommendationsLoading, recommendationsError] = useFetch(`movie/${id}/recommendations`);
+  const [movie, isLoading, error] = useFetch(`/movie/${id}`, 'append_to_response=videos,images,credits,keywords,recommendations');
   const [watchProviders, watchProvidersLoading, watchProvidersError] = useFetch(`movie/${id}/watch/providers`);
 
   const [showAddReview, setShowAddReview] = useState(false);
@@ -48,8 +46,6 @@ const MovieDetails = ({ id }) => {
   const handleShowAddReview = (e) => {
     setShowAddReview(!showAddReview);
   }
-  console.log(credits)
-  console.log(movie)
 
   const Video = ({video}) => {
     return (
@@ -80,22 +76,30 @@ const MovieDetails = ({ id }) => {
           <div className={styles.textInfo}>
             <h1>{movie.title}</h1>
             <ul className={styles.tagsList}>
-              {!!keywords && !!keywords.keywords && keywords.keywords.map(keyword => <li className={styles.tag} key={keyword.id}>{keyword.name}</li>)}
+              {!!movie.keywords && !!movie.keywords.keywords && movie.keywords.keywords.map(keyword => <li className={styles.tag} key={keyword.id}>{keyword.name}</li>)}
             </ul>
             <h2>{movie.tagline}</h2>
             <a href={movie.homepage} title={movie.title}>{movie.title} homepage</a>
-            {!!watchProviders & !!watchProviders.results && watchProviders.results.BE && watchProviders.results.BE.flatrate && <div className={styles.watch}><p>Watch: </p> <a href={watchProviders.results.BE.link}><img className={styles.providerLogo} src={`https://www.themoviedb.org/t/p/original${watchProviders.results.BE.flatrate[0].logo_path}`} alt={watchProviders.results.BE.flatrate[0].provider_name}/></a></div>}
+            {!!watchProviders & !!watchProviders.results && watchProviders.results.BE && watchProviders.results.BE.flatrate && 
+              <div className={styles.watch}>
+                <p>Links: </p> 
+                <a href={watchProviders.results.BE.link}><img className={styles.providerLogo} src={`https://www.themoviedb.org/t/p/original${watchProviders.results.BE.flatrate[0].logo_path}`} alt={watchProviders.results.BE.flatrate[0].provider_name}/></a>
+                {/* <a href={} */}
+              </div>}
             <h2>Synopsis:</h2>
             <p>{movie.overview}</p>
-            
+            <h2>Top Cast</h2>
+            <div className={styles.people}>
+              {!!movie.credits && movie.credits.cast && movie.credits.cast.slice(0,3).map(person => <Person key={person.id} person={person}/>)}
+            </div>
           </div>
         </article>
         <h3 className={styles.recommendationsTitle}>If you liked <em>{movie.title}</em>, look out for these movies</h3>
         <div className={styles.recommendedMoviesList}>
-          {!!recommendations && !!recommendations.results && 
-            recommendations.results.map(
+          {!!movie.recommendations && !!movie.recommendations.results && 
+            movie.recommendations.results.map(
               rec => 
-                <Link to={Routes.MOVIE_DETAILS.replace(':id', rec.id)}>
+                <Link key={rec.id} to={Routes.MOVIE_DETAILS.replace(':id', rec.id)}>
                   <img className={styles.movieImg} src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${rec.poster_path}`} key={rec.id} alt={rec.title} />
                 </Link> 
               )}

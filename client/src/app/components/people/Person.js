@@ -13,6 +13,9 @@ const Person = ({ person }) => {
         <h3 className={styles.title}>{person.name}</h3>
         <span className={styles.rating}>{dayjs().$y - dayjs(data.birthday).$y}</span>
       </div>
+      <footer className={styles.meta}>
+       {!!person.character && <span className={styles.numReviews}>{person.character}</span>} 
+      </footer>
     </article>
   )
 };
