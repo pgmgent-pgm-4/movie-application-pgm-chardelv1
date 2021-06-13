@@ -35,7 +35,8 @@ const MovieListItem = ({ movie, type = 'remote' }) => {
     <article className={styles.movielistItem}>
       <Link to={Routes.MOVIE_DETAILS.replace(':id', movie.id)}>
       <picture className={styles.picture}>
-      <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
+      {!!movie.poster_path && <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />}
+      {!(!!movie.poster_path) && <img src='https://api.acomart.tv/images/video-placeholder.jpg' alt={movie.name} />}
       </picture>
       <div className={styles.content}>
         <span className={styles.rating}>{Math.floor(movie.vote_average*10)}<sup>%</sup></span>

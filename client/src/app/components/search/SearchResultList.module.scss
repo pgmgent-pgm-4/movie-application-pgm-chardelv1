@@ -1,5 +1,12 @@
 .resultsList {
     display: flex;
+    // flex-direction: column;
     flex-wrap: wrap;
-    justify-content: center;
+    @media screen and (min-width: 40rem) {
+        flex-basis: 80%;
+    }
+    > .movieList {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }

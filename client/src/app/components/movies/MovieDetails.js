@@ -48,11 +48,13 @@ const MovieDetails = ({ id }) => {
   const handleShowAddReview = (e) => {
     setShowAddReview(!showAddReview);
   }
+  console.log(credits)
+  console.log(movie)
 
   const Video = ({video}) => {
     return (
       <div className={styles.videoContainer}>
-        <iframe width="100%" height="56%" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+        <iframe width="560" height="349" src={`https://www.youtube.com/embed/${video.key}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
       </div>)
   }
 
@@ -73,6 +75,7 @@ const MovieDetails = ({ id }) => {
               {dbMovie && <span className={styles.numReviews}><VscPreview /><span>{ dbMovie.numReviews }</span></span>}
               {dbMovie && <span className={styles.numViews}><FiEye /><span>{ dbMovie.numViews }</span></span>}
             </footer>
+            {movie.videos && <Video video={movie.videos.results[0]}/>}
           </div>
           <div className={styles.textInfo}>
             <h1>{movie.title}</h1>
@@ -81,10 +84,10 @@ const MovieDetails = ({ id }) => {
             </ul>
             <h2>{movie.tagline}</h2>
             <a href={movie.homepage} title={movie.title}>{movie.title} homepage</a>
-            {!!watchProviders & !!watchProviders.results && watchProviders.results.BE && watchProviders.results.BE.flatrate && <div className={styles.watch}><p>Watch: </p> <img className={styles.providerLogo} src={`https://www.themoviedb.org/t/p/original${watchProviders.results.BE.flatrate[0].logo_path}`} alt={watchProviders.results.BE.flatrate[0].provider_name}/></div>}
+            {!!watchProviders & !!watchProviders.results && watchProviders.results.BE && watchProviders.results.BE.flatrate && <div className={styles.watch}><p>Watch: </p> <a href={watchProviders.results.BE.link}><img className={styles.providerLogo} src={`https://www.themoviedb.org/t/p/original${watchProviders.results.BE.flatrate[0].logo_path}`} alt={watchProviders.results.BE.flatrate[0].provider_name}/></a></div>}
             <h2>Synopsis:</h2>
             <p>{movie.overview}</p>
-            {movie.videos && <Video video={movie.videos.results[0]}/>}
+            
           </div>
         </article>
         <h3 className={styles.recommendationsTitle}>If you liked <em>{movie.title}</em>, look out for these movies</h3>

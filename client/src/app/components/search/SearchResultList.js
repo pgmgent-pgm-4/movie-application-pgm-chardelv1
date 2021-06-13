@@ -4,7 +4,7 @@ import SearchResultListItem from './SearchResultListItem';
 
 const SearchResults = ({ query }) => {
   const [results, isLoading, error] = useFetch('search/multi', `query=${encodeURI(query)}&language=en-US`);
-  console.table(results.results);
+  // console.table(results.results);
 
   return (
     <>

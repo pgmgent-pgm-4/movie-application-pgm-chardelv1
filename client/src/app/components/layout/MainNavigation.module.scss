@@ -1,9 +1,31 @@
-.user__avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+nav {
+    max-width: 100%;
+    padding: 1.25rem;
 
-    border: 2px solid var(--border-color);
+    &>ul {
+        max-width: 100%;
+        padding-left: 0;
 
-    background-size: cover;
+        &>li {
+            padding: 1rem 1rem 0 0;
+            &>button {
+                background-color: var(--bg-color);
+                padding: .5rem;
+                border-radius: 15pt;
+                border: 2px solid var(--border-color);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                color: var(--text-color);
+                &>.user__avatar {
+                    width: 2rem;
+                    height: 2rem;
+                    border-radius: 50%;
+                    background-size: cover;
+                }
+            }
+        }
+    }
+
 }
