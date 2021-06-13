@@ -1,21 +1,35 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FiEye } from "react-icons/fi";
 import { VscPreview } from "react-icons/vsc";
 import { useFirestore } from '../../contexts/firebase/firestore.context';
 
 import useFetch from '../../hooks/useFetch';
+import * as Routes from '../../routes';
+import { useAuth } from '../../contexts/firebase/auth.context';
 import styles from './ShowDetails.module.scss';
 import { CommentForm, CommentList } from '../comments';
+import { ReviewForm, ReviewList } from '../reviews';
 
 const ShowDetails = ({ id }) => {
+  const {currentUser} = useAuth();
   const [show, showIsLoading, showError] = useFetch(`/tv/${id}`, 'append_to_response=videos,images');
+  const [credits, creditsLoading, creditsError] = useFetch(`/tv/${id}/credits`);
+  const [altTitles, altTitlesLoading, altTitlesError] = useFetch(`tv/${id}/alternative_titles`);
+  const [keywords, keywordsLoading, keywordsError] = useFetch(`tv/${id}/keywords`);
+  const [recommendations, recommendationsLoading, recommendationsError] = useFetch(`tv/${id}/recommendations`);
+  const [watchProviders, watchProvidersLoading, watchProvidersError] = useFetch(`tv/${id}/watch/providers`);
 
   const [tvShow, setTvShow] = useState();
   const [tvShowComments, setTvShowComments] = useState();
   const [tvShowReviews, setTvShowReviews] = useState();
+  const [showAddReview, setShowAddReview] = useState(false);
+
+  const handleShowAddReview = (e) => {
+    setShowAddReview(!showAddReview);
+  }
 
   const { getTvShowById, getTvShowComments, getTvShowReviews } = useFirestore();
-    //console.log(show.id)
     
   const fetchData = useCallback(
     async () => {
@@ -52,7 +66,7 @@ const ShowDetails = ({ id }) => {
             <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${show.poster_path}`} alt={show.title} />
           </picture>
           <div className={styles.content}>
-            <span className={styles.rating}>{show.vote_average}</span>
+            <span className={styles.rating}>{show.vote_average*10}<sup>%</sup></span>
             <h3 className={styles.title}>{ show.title }</h3>
           </div>   
           <footer className={styles.meta}>
@@ -69,6 +83,13 @@ const ShowDetails = ({ id }) => {
           {show.videos && <Video video={show.videos.results[0]}/>}
         </div>
       </article>}
+      {!!currentUser && 
+      <div className={styles.review}>
+        <img className={styles.user__avatar} src={`https://robohash.org/${currentUser.id}?gravatar=hashed`} alt='User avatar'/>
+        <button className={styles.leaveReviewButton} onClick={handleShowAddReview}>Add a review</button>
+        {!!showAddReview && <ReviewForm subjectId={id} subjectType='tv' />}
+      </div>}
+        <ReviewList reviews={tvShowReviews} amount={3}/>
       <CommentForm subjectId={id} subjectType='tv' />
       <CommentList key={id} comments={tvShowComments} subjectType='tv' subjectId={id} amount={3}/>
       {showIsLoading && <p>Loading...</p>}

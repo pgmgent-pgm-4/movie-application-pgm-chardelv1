@@ -38,8 +38,7 @@ const MovieListItem = ({ movie, type = 'remote' }) => {
       <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
       </picture>
       <div className={styles.content}>
-        {dbMovie && <span className={styles.rating}>{Math.round(dbMovie.avgRating / 5 * 100)}<sup>%</sup></span>}
-        {!dbMovie && <span className={styles.rating}>{Math.floor(movie.vote_average*10)}<sup>%</sup></span>}
+        <span className={styles.rating}>{Math.floor(movie.vote_average*10)}<sup>%</sup></span>
         <h3 className={styles.title}>{ movie.title }</h3>
         <p>Release date: {parseReleaseDate(movie.release_date)}</p>
       </div>

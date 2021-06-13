@@ -32,7 +32,6 @@ const CommentListItem = ({comment, subjectId, subjectType}) => {
       try {
         const dbComments = await getCommentComments(subjectType, subjectId, (comment.uid).toString());
         setComments(dbComments);
-        console.log(comments)
       } catch (err) {
         console.error(err, (comment.uid).toString())
       }

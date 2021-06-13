@@ -86,7 +86,22 @@ const FirestoreProvider = ({children}) => {
     return movieReviews;
   };
 
-  const addMovieReview = async (movieRef, review) => {
+  const addMovieReview = async (movieId, review) => {
+    let document = await db.collection('movies').doc(movieId).get();
+    if (document && document.exists) {
+      await document.ref.update({
+        modifiedAt: new Date(),
+      });
+    } else {
+      await document.ref.set({
+        id: movieId,
+        createdAt: new Date(),
+        modifiedAt: null,
+        deletedAt: null,
+        name: null,
+      })
+    }
+    const movieRef = db.collection('movies').doc(movieId);
     var reviewRef = movieRef.collection('reviews').doc(uuidv4());
 
     return db.runTransaction((transaction) => {
@@ -199,6 +214,22 @@ const FirestoreProvider = ({children}) => {
   }
 
   const addCommentToRef = async (docType, docId, colType = null, colId = null, comment) => {
+    let document = await db.collection(docType).doc(docId).get();
+    if (document && document.exists) {
+      await document.ref.update({
+        modifiedAt: new Date(),
+        numComments: +1
+      });
+    } else {
+      await document.ref.set({
+        id: docId,
+        createdAt: new Date(),
+        modifiedAt: null,
+        deletedAt: null,
+        name: null,
+        numComments: 1
+      })
+    }
     const parentRef = db.collection(docType).doc(docId);
     let commentRef;
     if (!(!!colType) || !(!!colId)) {
@@ -227,7 +258,22 @@ const FirestoreProvider = ({children}) => {
     })
   }
 
-  const addTvShowReview = async (tvShowRef, review) => {
+  const addTvShowReview = async (tvShowId, review) => {
+    let document = await db.collection('tv').doc(tvShowId).get();
+    if (document && document.exists) {
+      await document.ref.update({
+        modifiedAt: new Date(),
+      });
+    } else {
+      await document.ref.set({
+        id: tvShowId,
+        createdAt: new Date(),
+        modifiedAt: null,
+        deletedAt: null,
+        name: null,
+      })
+    }
+    const tvShowRef = db.collection('tv').doc(tvShowId);
     var reviewRef = tvShowRef.collection('reviews').doc(uuidv4());
 
     return db.runTransaction((transaction) => {

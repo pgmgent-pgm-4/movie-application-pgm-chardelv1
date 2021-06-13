@@ -39,8 +39,7 @@ const ShowListItem = ({ show }) => {
         {!(!!show.poster_path) && <img src='https://api.acomart.tv/images/video-placeholder.jpg' alt={show.name} />}
       </picture>
       <div className={styles.content}>
-        {tvShow && tvShow.avgRating && <span className={styles.rating}>{Math.round(tvShow.avgRating / 5 * 100)}<sup>%</sup></span>}
-        {!tvShow && <span className={styles.rating}>{show.vote_average * 10}<sup>%</sup></span>}
+        <span className={styles.rating}>{show.vote_average * 10}<sup>%</sup></span>
         <h3 className={styles.title}>{ show.name }</h3>
         <p>First aired on: {parseReleaseDate(show.first_air_date)}</p>
       </div>   
