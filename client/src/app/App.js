@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AuthProvider, FirebaseProvider } from './contexts/firebase';
 
@@ -22,6 +23,10 @@ function App() {
   return (
     <ThemeContext.Provider value={{theme, setTheme}}>
     <div className={styles.app} data-theme={theme}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Movie Application</title>
+      </Helmet>
       <FirebaseProvider>
         <AuthProvider>
           <FirestoreProvider>
