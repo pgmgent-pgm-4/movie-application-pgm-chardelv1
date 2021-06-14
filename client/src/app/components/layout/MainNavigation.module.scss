@@ -19,11 +19,34 @@ nav {
                 flex-wrap: wrap;
                 color: var(--text-color);
                 &>.user__avatar {
+                    @media screen and (min-width: 45rem) {
+                        display: inline-block;
+                    }
+                    display: none;
                     width: 2rem;
                     height: 2rem;
                     border-radius: 50%;
                     background-size: cover;
                 }
+                
+            }
+            & .search {
+                width: 1.5rem;
+                padding: 0.5rem 1rem;
+                border-radius: 5pt;
+                transition: width 0.4s ease;
+                &:focus, &:focus-within {
+                    width: auto;
+                    transition: width .4s ease;
+                }
+
+                & ~ a {
+                    padding-left: .35rem;
+                }
+            }
+            
+            >a >.logo {
+                width: 4rem;
             }
         }
     }

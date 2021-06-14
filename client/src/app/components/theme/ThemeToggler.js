@@ -11,7 +11,7 @@ const ThemeToggler = () => {
   };
 
   return (
-    <button className={styles.themeToggler} onClick={handleThemeToggle}>
+    <button className={styles.themeToggler} onClick={handleThemeToggle} title="Turn off the lights">
       <span role="img" aria-label="switch theme">
         {theme ===  'light' ? '🌞' : '🔅'}
       </span>
